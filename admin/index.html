@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard – HomesPlus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="admin-header">
+    <h1>HomesPlus Admin</h1>
+    <button id="logoutBtn">Logout</button>
+  </header>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="card">
+      <h3>Total Users</h3>
+      <p id="totalUsers">0</p>
+    </div>
+
+    <div class="card">
+      <h3>Verified Users</h3>
+      <p id="verifiedUsers">0</p>
+    </div>
+
+    <div class="card">
+      <h3>Total Inquiries</h3>
+      <p id="totalInquiries">0</p>
+    </div>
+  </section>
+
+  <!-- USERS TABLE -->
+  <section class="table-section">
+    <h2>Users</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Verified</th>
+          <th>Created At</th>
+        </tr>
+      </thead>
+      <tbody id="usersTable"></tbody>
+    </table>
+  </section>
+
+  <!-- INQUIRIES TABLE -->
+  <section class="table-section">
+    <h2>Property Inquiries</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Property</th>
+          <th>Message</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="inquiriesTable"></tbody>
+    </table>
+  </section>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

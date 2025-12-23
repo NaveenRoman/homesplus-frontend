@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HomesPlus</title>
+
+  <!-- Inter font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Header CSS -->
+  <link rel="stylesheet" href="css/styles.css" />
+
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-container">
+
+      <!-- Logo -->
+      <div class="logo">HomesPlus</div>
+
+      <!-- Desktop Nav -->
+      <nav class="nav-links">
+        <a href="#">Buy</a>
+        <a href="#">Rent</a>
+        <a href="#">Projects</a>
+        <a href="#">Map</a>
+        <a href="#">360°</a>
+      </nav>
+
+      <!-- Right Actions -->
+      <div class="header-actions">
+        <button class="sign-in-btn">Sign In</button>
+        <button class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MOBILE DRAWER -->
+  <aside class="mobile-drawer" id="mobileDrawer">
+    <nav class="drawer-nav">
+      <a href="#">Buy</a>
+      <a href="#">Rent</a>
+      <a href="#">Projects</a>
+      <a href="#">Map</a>
+      <a href="#">360°</a>
+      <a href="#" class="drawer-signin">Sign In</a>
+    </nav>
+  </aside>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- SECTION 2 – HERO (DISCOVERY ENTRY) -->
+<section class="hero-discovery" id="heroDiscovery">
+
+  <!-- BACKGROUND VIDEO -->
+  <video class="hero-bg-video" autoplay muted loop playsinline>
+    <source src="Assets/v1.mp4" type="video/mp4">
+  </video>
+
+  <!-- DARK OVERLAY FOR READABILITY -->
+  <div class="hero-overlay"></div>
+
+  <!-- HERO CONTENT -->
+  <div class="hero-content">
+
+    <h1 class="hero-title">
+      Find Your <span>Perfect Home</span>
+    </h1>
+
+    <p class="hero-subtitle">
+      Buy • Rent • Explore • Experience
+    </p>
+
+    <!-- SEARCH BAR -->
+    <div class="hero-search">
+      <input
+        type="text"
+        placeholder="Search by City, Area, Project..."
+        aria-label="Search property"
+      />
+      <button class="search-btn">Search</button>
+    </div>
+
+    <!-- CTA ACTIONS -->
+    <div class="hero-actions">
+      <button class="hero-cta map">🗺 Explore on Map</button>
+      <button class="hero-cta vr">🌀 360° Homes</button>
+    </div>
+
+  </div>
+
+  <!-- OPTIONAL IMAGE CARD (ON TOP OF VIDEO) -->
+  <div class="hero-visual">
+    <img
+      src="Assets/hd.jpeg"
+      alt="Luxury home"
+      class="hero-image"
+    />
+  </div>
+
+</section>
+<!-- ================================
+SECTION 3 – PROPERTY DISCOVERY MODES
+================================ -->
+<section class="discovery-modes" id="discoveryModes">
+
+  <div class="container">
+
+    <h2 class="modes-title">
+      How would you like to explore?
+    </h2>
+
+    <div class="modes-actions">
+
+      <button class="mode-card active" data-mode="buy">
+        <span class="mode-icon">🏡</span>
+        <span class="mode-text">Buy Home</span>
+      </button>
+
+      <button class="mode-card" data-mode="rent">
+        <span class="mode-icon">🏠</span>
+        <span class="mode-text">Rent Home</span>
+      </button>
+
+      <button class="mode-card" data-mode="projects">
+        <span class="mode-icon">🏗️</span>
+        <span class="mode-text">New Projects</span>
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================================
+SECTION 4 – FEATURED PROPERTIES
+================================ -->
+<section class="featured-properties" id="featuredProperties">
+
+  <div class="container">
+
+    <div class="section-header">
+      <h2>Featured Properties</h2>
+      <a href="#" class="view-all">View All →</a>
+    </div>
+
+    <!-- SCROLL WRAPPER -->
+    <div class="property-scroll">
+
+      <!-- BUY PROPERTY -->
+      <article class="property-card" data-id="1" data-category="buy">
+        <img src="Assets/i1.jpeg" alt="Luxury Villa">
+        <div class="property-info">
+          <span class="price">₹ 2.4 Cr</span>
+          <h3>Luxury Villa</h3>
+          <p class="location">📍 Jubilee Hills, Hyderabad</p>
+          <div class="rating">⭐ 4.8</div>
+        </div>
+      </article>
+
+      <!-- BUY PROPERTY -->
+      <article class="property-card" data-id="2" data-category="buy">
+        <img src="Assets/i2.jpeg" alt="Modern Apartment">
+        <div class="property-info">
+          <span class="price">₹ 1.2 Cr</span>
+          <h3>Modern Apartment</h3>
+          <p class="location">📍 Gachibowli</p>
+          <div class="rating">⭐ 4.5</div>
+        </div>
+      </article>
+
+      <!-- RENT PROPERTY -->
+      <article class="property-card" data-id="3" data-category="rent">
+        <img src="Assets/i3.jpeg" alt="Premium Flat">
+        <div class="property-info">
+          <span class="price">₹ 85 L</span>
+          <h3>Premium Flat</h3>
+          <p class="location">📍 Kondapur</p>
+          <div class="rating">⭐ 4.6</div>
+        </div>
+      </article>
+
+      <!-- NEW PROJECT -->
+      <article class="property-card" data-id="4" data-category="projects">
+        <img src="Assets/i4.jpeg" alt="Gated Community">
+        <div class="property-info">
+          <span class="price">₹ 3.1 Cr</span>
+          <h3>Gated Community Villa</h3>
+          <p class="location">📍 Tellapur</p>
+          <div class="rating">⭐ 4.9</div>
+        </div>
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="inquiry-box">
+  <h2>Contact Agent</h2>
+
+  <input type="text" id="inq-name" placeholder="Your Name" />
+  <input type="email" id="inq-email" placeholder="Your Email" />
+  <input type="text" id="inq-phone" placeholder="Your Phone" />
+  <textarea id="inq-message" placeholder="Message"></textarea>
+
+  <button id="send-inquiry" class="btn primary">
+    Send Inquiry
+  </button>
+
+  <p id="inq-status"></p>
+</section>
+
+
+<!-- SECTION 5 – MAP VIEW (PRO) -->
+<section class="map-section" id="mapSection">
+
+  <div class="map-header">
+    <h2>Explore Properties on Map</h2>
+    <p>Find homes near metro, offices, schools & more</p>
+  </div>
+
+  <div class="map-wrapper">
+
+    <!-- FLOATING FILTERS -->
+    <aside class="map-filters-glass">
+      <h4>Filters</h4>
+
+      <select>
+        <option>Price Range</option>
+        <option>Below ₹50L</option>
+        <option>₹50L – ₹1Cr</option>
+        <option>₹1Cr+</option>
+      </select>
+
+      <select>
+        <option>BHK</option>
+        <option>1 BHK</option>
+        <option>2 BHK</option>
+        <option>3 BHK</option>
+      </select>
+
+      <select>
+        <option>Property Type</option>
+        <option>Apartment</option>
+        <option>Villa</option>
+        <option>Plot</option>
+      </select>
+
+      <button class="apply-map-filters">Apply</button>
+    </aside>
+
+    <!-- MAP CANVAS -->
+    <div class="map-canvas-pro" id="mapCanvas">
+
+      <!-- PINS -->
+      <div class="map-pin-pro" data-id="1" style="top:42%; left:38%;"></div>
+      <div class="map-pin-pro" data-id="2" style="top:55%; left:55%;"></div>
+      <div class="map-pin-pro" data-id="3" style="top:30%; left:68%;"></div>
+
+      <!-- PROPERTY PREVIEW -->
+      <div class="map-preview-card" id="mapPreview">
+        <img src="assets/i1.jpeg" alt="Property">
+        <div class="preview-info">
+          <h4>Luxury Villa</h4>
+          <p>₹ 2.4 Cr • Jubilee Hills</p>
+          <button>View Details</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SECTION 6 – 360° VIRTUAL EXPERIENCE -->
+<section class="vr-section" id="vrExperience">
+
+  <div class="container">
+
+    <div class="vr-header">
+      <h2>Experience Homes in 360°</h2>
+      <p>Walk through rooms as if you are there</p>
+    </div>
+
+    <!-- ROOM TABS -->
+    <div class="vr-tabs">
+      <button class="vr-tab active" data-room="living">Living Room</button>
+      <button class="vr-tab" data-room="bedroom">Bedroom</button>
+      <button class="vr-tab" data-room="kitchen">Kitchen</button>
+    </div>
+
+    <!-- 360 VIEWER -->
+    <div class="vr-viewer" id="vrViewer">
+
+      <img
+        src="Assets/360/living.jpeg"
+        alt="360 Living Room"
+        class="vr-image"
+        id="vrImage"
+      />
+
+      <!-- HOTSPOTS -->
+      <span class="vr-hotspot" style="top:45%; left:30%;" data-room="bedroom"></span>
+      <span class="vr-hotspot" style="top:50%; left:65%;" data-room="kitchen"></span>
+
+      <!-- CONTROLS -->
+      <div class="vr-controls">
+        <span>⟳ Drag</span>
+        <span>📱 Gyro</span>
+        <button class="vr-fullscreen" id="vrFullscreen">⛶</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SECTION 7 – WHY TRUST US -->
+<section class="trust-section" id="trustSection">
+
+  <div class="container">
+
+    <h2 class="trust-title">Why Choose Us</h2>
+
+    <div class="trust-grid">
+
+      <!-- CARD 1 -->
+      <div class="trust-card">
+        <div class="trust-icon">✅</div>
+        <h3>Verified Properties</h3>
+        <p>
+          Every property is manually verified to ensure
+          authenticity, legal clarity, and genuine listings.
+        </p>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="trust-card">
+        <div class="trust-icon">🔍</div>
+        <h3>100% Transparent</h3>
+        <p>
+          Clear pricing, real images, honest details —
+          no hidden charges or misleading information.
+        </p>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="trust-card">
+        <div class="trust-icon">🌀</div>
+        <h3>360° Ready Experience</h3>
+        <p>
+          Explore homes virtually with immersive 360° views
+          before visiting physically.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SECTION 8 – ECOSYSTEM + STATS + REVIEWS -->
+<section class="ecosystem-section" id="ecosystemSection">
+
+  <div class="container">
+
+    <!-- SERVICES -->
+    <h2 class="ecosystem-title">Everything You Need</h2>
+
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-icon">🏗️</div>
+        <h3>Builders</h3>
+        <p>Trusted builders with verified projects.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">📐</div>
+        <h3>Architects</h3>
+        <p>Design homes that match your lifestyle.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🛋️</div>
+        <h3>Interiors</h3>
+        <p>End-to-end interior design solutions.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🏦</div>
+        <h3>Home Loans</h3>
+        <p>Easy loan approvals with best rates.</p>
+      </div>
+
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid">
+
+      <div class="stat-card">
+        <h4 data-count="10000">0</h4>
+        <p>Properties Listed</p>
+      </div>
+
+      <div class="stat-card">
+        <h4 data-count="5000">0</h4>
+        <p>Happy Buyers</p>
+      </div>
+
+      <div class="stat-card">
+        <h4 data-count="25">0</h4>
+        <p>Cities Covered</p>
+      </div>
+
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="reviews-section">
+
+      <h3 class="reviews-title">What Our Customers Say</h3>
+
+      <div class="reviews-grid">
+
+        <div class="review-card">
+          <p>
+            “The 360° experience helped us finalize our home without multiple site visits.”
+          </p>
+          <span>— Rohit, Hyderabad</span>
+        </div>
+
+        <div class="review-card">
+          <p>
+            “Transparent pricing and verified listings. Highly recommended!”
+          </p>
+          <span>— Ananya, Bangalore</span>
+        </div>
+
+        <div class="review-card">
+          <p>
+            “Loved the map view and filters. Buying became stress-free.”
+          </p>
+          <span>— Suresh, Chennai</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SECTION 9 – CALL TO ACTION -->
+<section class="cta-section" id="ctaSection">
+
+  <div class="cta-container">
+
+    <div class="cta-content">
+      <h2>Ready to Find Your Dream Home?</h2>
+      <p>
+        Book a site visit or talk to our experts today.
+        Experience properties with maps, 360° views, and verified listings.
+      </p>
+
+      <div class="cta-actions">
+        <button class="cta-btn primary">📞 Book Site Visit</button>
+        <button class="cta-btn secondary">💬 Contact Expert</button>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SECTION 10 – FOOTER -->
+<footer class="mega-footer">
+
+  <div class="footer-container">
+
+    <!-- BRAND -->
+    <div class="footer-col">
+      <h3 class="footer-logo">HomesPlus</h3>
+      <p>
+        Verified properties. Transparent pricing.
+        Experience homes with map & 360° views.
+      </p>
+    </div>
+
+    <!-- LINKS -->
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#">Buy</a></li>
+        <li><a href="#">Rent</a></li>
+        <li><a href="#">New Projects</a></li>
+        <li><a href="#">Map View</a></li>
+        <li><a href="#">360° Homes</a></li>
+      </ul>
+    </div>
+
+    <!-- COMPANY -->
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+
+    <!-- SOCIAL -->
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <div class="social-links">
+        <a href="#">🌐</a>
+        <a href="#">📘</a>
+        <a href="#">📸</a>
+        <a href="#">🐦</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COPYRIGHT -->
+  <div class="footer-bottom">
+    © 2025 HomesPlus. All rights reserved.
+  </div>
+
+</footer>
+
+
+
+
+  <!-- JS -->
+  <script src="js/script.js"></script>
+
+</body>
+</html>
+
