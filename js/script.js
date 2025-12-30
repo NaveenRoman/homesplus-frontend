@@ -3,6 +3,17 @@
 ================================ */
 const API_BASE = "https://homesplus-backend1-1.onrender.com/api";
 
+
+
+// 🔐 JWT PROTECTION
+const token = localStorage.getItem("homesplus_token");
+
+if (!token) {
+  alert("Please login first");
+  window.location.href = "../index.html";
+}
+
+
 /* ===============================
    SEND OTP
 ================================ */
@@ -87,3 +98,11 @@ async function verifyOTP() {
     message.style.color = "red";
   }
 }
+
+
+// 🔔 Notify admin on site visit
+window.addEventListener("load", () => {
+  fetch("https://homesplus-backend1-1.onrender.com/api/visit", {
+    method: "POST",
+  }).catch(() => {});
+});

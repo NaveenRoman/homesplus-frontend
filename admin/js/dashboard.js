@@ -1,26 +1,35 @@
-const API_BASE = "https://homesplus-backend1.onrender.com";
+/* ===============================
+   CONFIG
+================================ */
+const API_BASE = "https://homesplus-backend1-1.onrender.com/api/admin";
+const token = localStorage.getItem("homesplus_token");
 
-// 🔐 GET TOKEN
-const token = localStorage.getItem("token");
-
+/* ===============================
+   AUTH CHECK
+================================ */
 if (!token) {
   alert("Admin not logged in");
-  window.location.href = "/index.html";
+  window.location.href = "../index.html";
 }
 
-// LOGOUT
-document.getElementById("logoutBtn").onclick = () => {
-  localStorage.removeItem("token");
-  window.location.href = "/index.html";
-};
+/* ===============================
+   LOGOUT
+================================ */
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  localStorage.removeItem("homesplus_token");
+  window.location.href = "../index.html";
+});
 
-// FETCH STATS
+/* ===============================
+   FETCH STATS
+================================ */
 async function loadStats() {
   const res = await fetch(`${API_BASE}/stats`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
   });
+
   const data = await res.json();
 
   document.getElementById("totalUsers").textContent = data.totalUsers;
@@ -28,15 +37,17 @@ async function loadStats() {
   document.getElementById("totalInquiries").textContent = data.inquiries;
 }
 
-// FETCH USERS
+/* ===============================
+   FETCH USERS
+================================ */
 async function loadUsers() {
   const res = await fetch(`${API_BASE}/users`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
   });
-  const users = await res.json();
 
+  const users = await res.json();
   const tbody = document.getElementById("usersTable");
   tbody.innerHTML = "";
 
@@ -51,15 +62,17 @@ async function loadUsers() {
   });
 }
 
-// FETCH INQUIRIES
+/* ===============================
+   FETCH INQUIRIES
+================================ */
 async function loadInquiries() {
   const res = await fetch(`${API_BASE}/inquiries`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
   });
-  const inquiries = await res.json();
 
+  const inquiries = await res.json();
   const tbody = document.getElementById("inquiriesTable");
   tbody.innerHTML = "";
 
@@ -75,12 +88,16 @@ async function loadInquiries() {
   });
 }
 
-// LOAD ALL
+/* ===============================
+   INITIAL LOAD
+================================ */
 loadStats();
 loadUsers();
 loadInquiries();
 
-// 🔄 AUTO REFRESH EVERY 15 SECONDS
+/* ===============================
+   AUTO REFRESH (15s)
+================================ */
 setInterval(() => {
   loadStats();
   loadUsers();

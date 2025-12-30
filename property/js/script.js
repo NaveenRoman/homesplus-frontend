@@ -233,22 +233,23 @@ const statsObserver = new IntersectionObserver(entries => {
 }, { threshold: 0.4 });
 
 statNumbers.forEach(num => statsObserver.observe(num));
-
-document.getElementById("send-inquiry").addEventListener("click", async () => {
-  const data = {
-    propertyId: "PROP-001",
-    name: document.getElementById("inq-name").value,
-    email: document.getElementById("inq-email").value,
-    phone: document.getElementById("inq-phone").value,
-    message: document.getElementById("inq-message").value,
-  };
-
+document.getElementById("send-inquiry")?.addEventListener("click", async () => {
   const status = document.getElementById("inq-status");
 
+  const data = {
+    propertyId: "PROP-001",
+    name: document.getElementById("inq-name")?.value,
+    email: document.getElementById("inq-email")?.value,
+    phone: document.getElementById("inq-phone")?.value,
+    message: document.getElementById("inq-message")?.value,
+  };
+
   try {
-    const res = await fetch("https://homesplus-backend1.onrender.com", {
+    const res = await fetch(`${API_BASE}/api/inquiry`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify(data),
     });
 
@@ -258,11 +259,11 @@ document.getElementById("send-inquiry").addEventListener("click", async () => {
       status.textContent = "✅ Inquiry sent successfully!";
       status.style.color = "green";
     } else {
-      status.textContent = result.message;
+      status.textContent = result.message || "❌ Failed to send inquiry";
       status.style.color = "red";
     }
   } catch (err) {
-    status.textContent = "Server error";
+    status.textContent = "❌ Server error";
     status.style.color = "red";
   }
 });
