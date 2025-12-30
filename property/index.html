@@ -19,7 +19,7 @@
     <div class="header-container">
 
       <!-- Logo -->
-      <div class="logo">HomesPlus</div>
+      <div class="logo">🏠 MGR Property</div>
 
       <!-- Desktop Nav -->
       <nav class="nav-links">
@@ -216,12 +216,20 @@ SECTION 4 – FEATURED PROPERTIES
   <input type="text" id="inq-phone" placeholder="Your Phone" />
   <textarea id="inq-message" placeholder="Message"></textarea>
 
-  <button id="send-inquiry" class="btn primary">
-    Send Inquiry
-  </button>
+  <!-- ACTION BUTTONS -->
+  <div class="action-row">
+    <button class="btn email" onclick="sendEmail()">
+      📧 Send Email
+    </button>
+
+    <button class="btn whatsapp" onclick="sendWhatsApp()">
+      💬 WhatsApp
+    </button>
+  </div>
 
   <p id="inq-status"></p>
 </section>
+
 
 
 <!-- SECTION 5 – MAP VIEW (PRO) -->

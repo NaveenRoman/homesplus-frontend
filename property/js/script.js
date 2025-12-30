@@ -275,3 +275,73 @@ if (!token) {
   alert("Please login first");
   window.location.href = "../index.html";
 }
+              
+
+
+
+
+function getFormData() {
+  return {
+    name: document.getElementById("inq-name").value.trim(),
+    email: document.getElementById("inq-email").value.trim(),
+    phone: document.getElementById("inq-phone").value.trim(),
+    message: document.getElementById("inq-message").value.trim(),
+  };
+}
+
+/* 📧 EMAIL */
+function sendEmail() {
+  const { name, email, phone, message } = getFormData();
+
+  if (!name || !phone) {
+    alert("Please enter Name and Phone");
+    return;
+  }
+
+  const to = "goparajumanasa24@gmail.com";
+  const subject = encodeURIComponent("New Property Inquiry - HomesPlus");
+
+  const body = encodeURIComponent(
+`Hello,
+
+New Inquiry from HomesPlus website:
+
+Name: ${name}
+Email: ${email || "Not provided"}
+Phone: ${phone}
+
+Message:
+${message || "No message"}
+`
+  );
+
+  window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+}
+
+/* 💬 WHATSAPP */
+function sendWhatsApp() {
+  const { name, email, phone, message } = getFormData();
+
+  if (!name || !phone) {
+    alert("Please enter Name and Phone");
+    return;
+  }
+
+  const adminNumber = "919949770998"; // WhatsApp number
+
+  const text = encodeURIComponent(
+`Hello 👋
+
+New Inquiry from HomesPlus:
+
+👤 Name: ${name}
+📧 Email: ${email || "Not provided"}
+📱 Phone: ${phone}
+
+📝 Message:
+${message || "No message"}`
+  );
+
+  window.open(`https://wa.me/${adminNumber}?text=${text}`, "_blank");
+}
+
