@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>HomesPlus Auth</title>
+  <title>HomesPlus Login</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -10,39 +10,35 @@
 <div class="auth-container">
   <div class="auth-card">
 
-    <h2 id="title">Register</h2>
-    <p class="subtitle" id="subtitle">
-      Create your HomesPlus account
-    </p>
+    <h2 id="title">Login to HomesPlus</h2>
+    <p class="subtitle" id="subtitle">Secure access to properties</p>
 
     <!-- EMAIL -->
-    <input
-      type="email"
-      id="email"
-      placeholder="Enter your email"
-      required
-    />
+    <input type="email" id="email" placeholder="Email address" />
 
-    <!-- SEND OTP -->
-    <button id="sendOtpBtn" onclick="sendOTP()">Send OTP</button>
+    <!-- PASSWORD (OPTIONAL LOGIN) -->
+    <input type="password" id="password" placeholder="Password (optional)" />
 
     <!-- OTP SECTION -->
-    <div id="otp-section" class="otp-box">
-      <input
-        type="text"
-        id="otp"
-        placeholder="Enter OTP"
-      />
-      <button onclick="verifyOTP()">Verify & Continue</button>
+    <div class="otp-box" id="otpBox">
+      <input type="text" id="otp" placeholder="Enter OTP" />
+      <button onclick="verifyOTP()">Verify OTP</button>
     </div>
+
+    <!-- ACTION BUTTON -->
+    <button id="actionBtn" onclick="handleLogin()">Continue</button>
 
     <p id="message"></p>
 
-    <!-- TOGGLE -->
-    <p class="switch">
-      Already registered?
-      <span onclick="switchMode()">Login</span>
-    </p>
+    <!-- SWITCH MODE -->
+    <div class="switch">
+      <span onclick="toggleMode()">Use OTP instead</span>
+    </div>
+
+    <!-- SKIP -->
+    <div class="switch">
+      <span onclick="skipLogin()">Skip for now</span>
+    </div>
 
   </div>
 </div>

@@ -3,102 +3,122 @@
 ================================ */
 const API_BASE = "https://homesplus-backend1-1.onrender.com/api";
 
-/* ===============================
-   SEND OTP
-================================ */
-async function sendOTP() {
-  const email = document.getElementById("email").value.trim();
-  const message = document.getElementById("message");
-  const otpSection = document.getElementById("otp-section");
 
-  message.textContent = "";
-  message.style.color = "#333";
+
+let useOTP = false;
+
+/* TOGGLE LOGIN MODE */
+function toggleMode() {
+  useOTP = !useOTP;
+
+  document.getElementById("otpBox").style.display = "none";
+  document.getElementById("message").textContent = "";
+
+  document.getElementById("subtitle").textContent =
+    useOTP ? "Login using OTP" : "Login using password";
+
+  document.querySelector(".switch span").textContent =
+    useOTP ? "Use password instead" : "Use OTP instead";
+}
+
+/* MAIN LOGIN HANDLER */
+async function handleLogin() {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const msg = document.getElementById("message");
 
   if (!email) {
-    message.textContent = "❌ Please enter your email";
-    message.style.color = "red";
+    msg.textContent = "❌ Email required";
+    msg.style.color = "red";
     return;
   }
 
+  // OTP FLOW
+  if (useOTP) {
+    sendOTP(email);
+    return;
+  }
+
+  // PASSWORD FLOW
+  if (!password) {
+    msg.textContent = "❌ Password required or switch to OTP";
+    msg.style.color = "red";
+    return;
+  }
+
+  msg.textContent = "🔐 Password login coming next step";
+  msg.style.color = "orange";
+}
+
+/* SEND OTP */
+async function sendOTP(email) {
+  const msg = document.getElementById("message");
+
   try {
-    const res = await fetch(`${API_BASE}/send-otp`, {
+    const res = await fetch(`${API}/send-otp`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email })
+      body: JSON.stringify({ email }),
     });
 
     const data = await res.json();
 
     if (!res.ok) {
-      message.textContent = data.message || "Failed to send OTP";
-      message.style.color = "red";
+      msg.textContent = data.message;
+      msg.style.color = "red";
       return;
     }
 
-    message.textContent = "✅ OTP sent to your email";
-    message.style.color = "green";
-    otpSection.style.display = "block";
+    msg.textContent = "✅ OTP sent to email";
+    msg.style.color = "green";
+    document.getElementById("otpBox").style.display = "block";
 
-  } catch (err) {
-    console.error(err);
-    message.textContent = "❌ Server error";
-    message.style.color = "red";
+  } catch {
+    msg.textContent = "❌ Server error";
+    msg.style.color = "red";
   }
 }
 
-/* ===============================
-   VERIFY OTP (LOGIN / REGISTER)
-================================ */
+/* VERIFY OTP */
 async function verifyOTP() {
-  const email = document.getElementById("email").value.trim();
-  const otp = document.getElementById("otp").value.trim();
-  const message = document.getElementById("message");
-
-  if (!otp) {
-    message.textContent = "❌ Enter OTP";
-    message.style.color = "red";
-    return;
-  }
+  const email = document.getElementById("email").value;
+  const otp = document.getElementById("otp").value;
+  const msg = document.getElementById("message");
 
   try {
-    const res = await fetch(`${API_BASE}/verify-otp`, {
+    const res = await fetch(`${API}/verify-otp`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, otp })
+      body: JSON.stringify({ email, otp }),
     });
 
     const data = await res.json();
 
     if (!res.ok) {
-      message.textContent = data.message || "Invalid OTP";
-      message.style.color = "red";
+      msg.textContent = data.message;
+      msg.style.color = "red";
       return;
     }
 
-    // ✅ SAVE JWT + REGISTER FLAG
-    localStorage.setItem("homesplus_token", data.token);
-    localStorage.setItem("homesplus_registered", "true");
-
-    message.textContent = "✅ Login successful!";
-    message.style.color = "green";
+    localStorage.setItem("token", data.token);
+    msg.textContent = "✅ Login successful!";
+    msg.style.color = "green";
 
     setTimeout(() => {
       window.location.href = "property/index.html";
-    }, 1000);
+    }, 800);
 
-  } catch (err) {
-    console.error(err);
-    message.textContent = "❌ Verification failed";
-    message.style.color = "red";
+  } catch {
+    msg.textContent = "❌ OTP verification failed";
+    msg.style.color = "red";
   }
 }
 
-/* ===============================
-   VISITOR NOTIFICATION (SAFE)
-================================ */
-window.addEventListener("load", () => {
-  fetch(`${API_BASE}/visit`, { method: "POST" }).catch(() => {});
-});
+/* SKIP LOGIN */
+function skipLogin() {
+  localStorage.setItem("guest", "true");
+  window.location.href = "property/index.html";
+}
 
 
 // 🔔 Notify admin on site visit
