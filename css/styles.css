@@ -39,3 +39,99 @@ body {
   margin-top: 10px;
   color: green;
 }
+
+
+* {
+  box-sizing: border-box;
+  font-family: "Inter", system-ui;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 380px;
+  animation: fadeIn 0.8s ease;
+}
+
+.auth-card {
+  background: #fff;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+.auth-card h2 {
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 14px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(37,99,235,0.3);
+}
+
+.otp-box {
+  display: none;
+  animation: slideDown 0.4s ease;
+}
+
+#message {
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.switch {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.switch span {
+  color: #2563eb;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

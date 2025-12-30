@@ -106,3 +106,15 @@ window.addEventListener("load", () => {
     method: "POST",
   }).catch(() => {});
 });
+
+
+// After OTP verified
+localStorage.setItem("homesplus_token", data.token);
+localStorage.setItem("homesplus_registered", "true");
+
+message.textContent = "✅ Login successful!";
+message.style.color = "green";
+
+setTimeout(() => {
+  window.location.href = "property/index.html";
+}, 1000);
