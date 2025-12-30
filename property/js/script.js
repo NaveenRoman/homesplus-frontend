@@ -267,3 +267,11 @@ document.getElementById("send-inquiry")?.addEventListener("click", async () => {
     status.style.color = "red";
   }
 });
+
+
+const token = localStorage.getItem("homesplus_token");
+
+if (!token) {
+  alert("Please login first");
+  window.location.href = "../index.html";
+}

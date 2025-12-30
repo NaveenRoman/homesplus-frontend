@@ -3,17 +3,6 @@
 ================================ */
 const API_BASE = "https://homesplus-backend1-1.onrender.com/api";
 
-
-
-// 🔐 JWT PROTECTION
-const token = localStorage.getItem("homesplus_token");
-
-if (!token) {
-  alert("Please login first");
-  window.location.href = "../index.html";
-}
-
-
 /* ===============================
    SEND OTP
 ================================ */
@@ -23,9 +12,10 @@ async function sendOTP() {
   const otpSection = document.getElementById("otp-section");
 
   message.textContent = "";
+  message.style.color = "#333";
 
   if (!email) {
-    message.textContent = "❌ Please enter email";
+    message.textContent = "❌ Please enter your email";
     message.style.color = "red";
     return;
   }
@@ -34,7 +24,7 @@ async function sendOTP() {
     const res = await fetch(`${API_BASE}/send-otp`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ email })
     });
 
     const data = await res.json();
@@ -50,13 +40,14 @@ async function sendOTP() {
     otpSection.style.display = "block";
 
   } catch (err) {
+    console.error(err);
     message.textContent = "❌ Server error";
     message.style.color = "red";
   }
 }
 
 /* ===============================
-   VERIFY OTP
+   VERIFY OTP (LOGIN / REGISTER)
 ================================ */
 async function verifyOTP() {
   const email = document.getElementById("email").value.trim();
@@ -73,18 +64,20 @@ async function verifyOTP() {
     const res = await fetch(`${API_BASE}/verify-otp`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, otp }),
+      body: JSON.stringify({ email, otp })
     });
 
     const data = await res.json();
 
     if (!res.ok) {
-      message.textContent = data.message;
+      message.textContent = data.message || "Invalid OTP";
       message.style.color = "red";
       return;
     }
 
+    // ✅ SAVE JWT + REGISTER FLAG
     localStorage.setItem("homesplus_token", data.token);
+    localStorage.setItem("homesplus_registered", "true");
 
     message.textContent = "✅ Login successful!";
     message.style.color = "green";
@@ -94,10 +87,18 @@ async function verifyOTP() {
     }, 1000);
 
   } catch (err) {
+    console.error(err);
     message.textContent = "❌ Verification failed";
     message.style.color = "red";
   }
 }
+
+/* ===============================
+   VISITOR NOTIFICATION (SAFE)
+================================ */
+window.addEventListener("load", () => {
+  fetch(`${API_BASE}/visit`, { method: "POST" }).catch(() => {});
+});
 
 
 // 🔔 Notify admin on site visit
@@ -106,15 +107,3 @@ window.addEventListener("load", () => {
     method: "POST",
   }).catch(() => {});
 });
-
-
-// After OTP verified
-localStorage.setItem("homesplus_token", data.token);
-localStorage.setItem("homesplus_registered", "true");
-
-message.textContent = "✅ Login successful!";
-message.style.color = "green";
-
-setTimeout(() => {
-  window.location.href = "property/index.html";
-}, 1000);
