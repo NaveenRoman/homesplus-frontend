@@ -1,9 +1,4 @@
-/* ===============================
-   API CONFIG
-================================ */
 const API_BASE = "https://homesplus-backend1-1.onrender.com/api";
-
-
 
 let useOTP = false;
 
@@ -17,11 +12,11 @@ function toggleMode() {
   document.getElementById("subtitle").textContent =
     useOTP ? "Login using OTP" : "Login using password";
 
-  document.querySelector(".switch span").textContent =
+  document.getElementById("toggleText").textContent =
     useOTP ? "Use password instead" : "Use OTP instead";
 }
 
-/* MAIN LOGIN HANDLER */
+/* MAIN LOGIN */
 async function handleLogin() {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
@@ -33,15 +28,13 @@ async function handleLogin() {
     return;
   }
 
-  // OTP FLOW
   if (useOTP) {
     sendOTP(email);
     return;
   }
 
-  // PASSWORD FLOW
   if (!password) {
-    msg.textContent = "❌ Password required or switch to OTP";
+    msg.textContent = "❌ Enter password or switch to OTP";
     msg.style.color = "red";
     return;
   }
@@ -55,7 +48,7 @@ async function sendOTP(email) {
   const msg = document.getElementById("message");
 
   try {
-    const res = await fetch(`${API}/send-otp`, {
+    const res = await fetch(`${API_BASE}/send-otp`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
@@ -86,7 +79,7 @@ async function verifyOTP() {
   const msg = document.getElementById("message");
 
   try {
-    const res = await fetch(`${API}/verify-otp`, {
+    const res = await fetch(`${API_BASE}/verify-otp`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, otp }),
@@ -119,6 +112,11 @@ function skipLogin() {
   localStorage.setItem("guest", "true");
   window.location.href = "property/index.html";
 }
+
+/* VISIT TRACK */
+window.addEventListener("load", () => {
+  fetch(`${API_BASE}/visit`, { method: "POST" }).catch(() => {});
+});
 
 
 // 🔔 Notify admin on site visit
