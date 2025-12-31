@@ -271,10 +271,7 @@ document.getElementById("send-inquiry")?.addEventListener("click", async () => {
 
 const token = localStorage.getItem("homesplus_token");
 
-if (!token) {
-  alert("Please login first");
-  window.location.href = "../index.html";
-}
+
               
 
 
