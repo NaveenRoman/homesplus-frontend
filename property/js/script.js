@@ -280,68 +280,32 @@ if (!token) {
 
 
 
-function getFormData() {
-  return {
-    name: document.getElementById("inq-name").value.trim(),
-    email: document.getElementById("inq-email").value.trim(),
-    phone: document.getElementById("inq-phone").value.trim(),
-    message: document.getElementById("inq-message").value.trim(),
-  };
-}
+const ADMIN_EMAIL = "goparajumanasa24@gmail.com";
+const ADMIN_WHATSAPP = "919949770998";
+
+const MESSAGE = `
+Hello 👋
+
+I am interested in your services from HomesPlus.
+
+Please contact me with more details.
+`;
 
 /* 📧 EMAIL */
-function sendEmail() {
-  const { name, email, phone, message } = getFormData();
+function openEmail() {
+  const subject = encodeURIComponent("HomesPlus Service Inquiry");
+  const body = encodeURIComponent(MESSAGE);
 
-  if (!name || !phone) {
-    alert("Please enter Name and Phone");
-    return;
-  }
-
-  const to = "goparajumanasa24@gmail.com";
-  const subject = encodeURIComponent("New Property Inquiry - HomesPlus");
-
-  const body = encodeURIComponent(
-`Hello,
-
-New Inquiry from HomesPlus website:
-
-Name: ${name}
-Email: ${email || "Not provided"}
-Phone: ${phone}
-
-Message:
-${message || "No message"}
-`
-  );
-
-  window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+  window.location.href =
+    `mailto:${ADMIN_EMAIL}?subject=${subject}&body=${body}`;
 }
 
 /* 💬 WHATSAPP */
-function sendWhatsApp() {
-  const { name, email, phone, message } = getFormData();
-
-  if (!name || !phone) {
-    alert("Please enter Name and Phone");
-    return;
-  }
-
-  const adminNumber = "919949770998"; // WhatsApp number
-
-  const text = encodeURIComponent(
-`Hello 👋
-
-New Inquiry from HomesPlus:
-
-👤 Name: ${name}
-📧 Email: ${email || "Not provided"}
-📱 Phone: ${phone}
-
-📝 Message:
-${message || "No message"}`
+function openWhatsApp() {
+  const text = encodeURIComponent(MESSAGE);
+  window.open(
+    `https://wa.me/${ADMIN_WHATSAPP}?text=${text}`,
+    "_blank"
   );
-
-  window.open(`https://wa.me/${adminNumber}?text=${text}`, "_blank");
 }
 
