@@ -47,6 +47,19 @@ body {
   letter-spacing: 0.5px;
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 42px;          /* perfect header size */
+  width: auto;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+
 /* NAV LINKS */
 .nav-links {
   display: flex;
