@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Properties | MGR Property</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<h2 style="text-align:center;margin:20px">All Properties</h2>
+
+<section class="property-grid">
+
+  <article class="property-card" data-id="1">
+    <img src="Assets/i1.jpeg">
+    <h3>Luxury Villa</h3>
+    <p>₹ 2.4 Cr • Jubilee Hills</p>
+  </article>
+
+  <article class="property-card" data-id="2">
+    <img src="Assets/i2.jpeg">
+    <h3>Modern Apartment</h3>
+    <p>₹ 1.2 Cr • Gachibowli</p>
+  </article>
+
+  <article class="property-card" data-id="3">
+    <img src="Assets/i3.jpeg">
+    <h3>Premium Flat</h3>
+    <p>₹ 85 L • Kondapur</p>
+  </article>
+
+</section>
+
+<script>
+
+document.querySelectorAll(".property-card").forEach(card => {
+  card.addEventListener("click", () => {
+    const id = card.dataset.id;
+    window.location.href = `property.html?id=${id}`;
+  });
+});
+
+</script>
+
+
+
+
+<script src="js/properties.js"></script>
+</body>
+</html>
