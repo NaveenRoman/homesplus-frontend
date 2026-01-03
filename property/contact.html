@@ -1,44 +1,95 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Contact — HomesPlus</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <meta charset="UTF-8" />
+  <title>Contact Us | MGR Property</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="css/contact.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <div class="logo">HomesPlus</div>
-      <nav class="nav">
-        <a href="index.html">Home</a>
-        <a href="listings.html">Listings</a>
-        <a href="property.html">Property</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-    </div>
-  </header>
 
-  <main class="container">
-    <h1>Contact Us</h1>
-    <form id="contactForm" class="contact-form">
-      <label>
-        Name
-        <input type="text" name="name" required />
-      </label>
-      <label>
-        Email
-        <input type="email" name="email" required />
-      </label>
-      <label>
-        Message
-        <textarea name="message" rows="5" required></textarea>
-      </label>
-      <button type="submit" class="btn primary">Send message</button>
-    </form>
-    <div class="map-placeholder">Map will go here</div>
-  </main>
+<!-- ================= HEADER ================= -->
+<header class="contact-header">
+  <h1>Contact MGR Property</h1>
+  <p>We’re here to help you find your dream property</p>
+</header>
 
-  <script src="js/script.js"></script>
+<!-- ================= CONTACT SECTION ================= -->
+<section class="contact-container">
+
+  <!-- LEFT: CONTACT FORM -->
+  <div class="contact-form">
+    <h2>Send Us a Message</h2>
+
+    <input type="text" id="name" placeholder="Your Name" />
+    <input type="email" id="email" placeholder="Your Email" />
+    <input type="text" id="phone" placeholder="Your Phone Number" />
+    <textarea id="message" placeholder="Your Message"></textarea>
+
+    <button onclick="sendWhatsApp()">Send via WhatsApp</button>
+
+    <p class="note">We usually respond within 10 minutes</p>
+  </div>
+
+  <!-- RIGHT: QUICK CONTACT -->
+  <div class="contact-info">
+    <h2>Quick Contact</h2>
+
+    <a href="tel:9949770998" class="info-btn call">
+      📞 Call Now
+    </a>
+
+    <a
+      href="https://wa.me/919949770998?text=Hi%20I%20am%20interested%20in%20your%20property"
+      target="_blank"
+      class="info-btn whatsapp"
+    >
+      💬 WhatsApp
+    </a>
+
+    <a
+      href="mailto:goparajumanasa24@gmail.com"
+      class="info-btn email"
+    >
+      📧 Email
+    </a>
+  </div>
+
+</section>
+
+<!-- ================= MAP ================= -->
+<section class="map-section">
+  <h2>Visit Our Location</h2>
+
+  <iframe
+    src="https://www.google.com/maps?q=Hyderabad&output=embed"
+    allowfullscreen
+    loading="lazy">
+  </iframe>
+</section>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+function sendWhatsApp() {
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const phone = document.getElementById("phone").value;
+  const msg = document.getElementById("message").value;
+
+  const text =
+    `Hello, I am interested in a property.%0A` +
+    `Name: ${name}%0A` +
+    `Email: ${email}%0A` +
+    `Phone: ${phone}%0A` +
+    `Message: ${msg}`;
+
+  window.open(
+    `https://wa.me/919949770998?text=${text}`,
+    "_blank"
+  );
+}
+</script>
+
 </body>
 </html>
