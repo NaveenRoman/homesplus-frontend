@@ -1,0 +1,104 @@
+body {
+  margin: 0;
+  font-family: Inter, system-ui;
+  background: #f8fafc;
+}
+
+.site-header {
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #334155;
+}
+
+nav .active {
+  color: #2563eb;
+}
+
+.gallery-hero {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.gallery-tabs {
+  margin-top: 20px;
+}
+
+.gallery-tabs .tab {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  margin: 6px;
+  cursor: pointer;
+}
+
+.tab.active {
+  background: #2563eb;
+  color: white;
+}
+
+.gallery-grid {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.gallery-card {
+  position: relative;
+  height: 220px;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.gallery-card img,
+.gallery-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 16px;
+}
+
+.gallery-cta {
+  background: #2563eb;
+  color: white;
+  text-align: center;
+  padding: 40px;
+}
+
+.cta-buttons a {
+  margin: 10px;
+  padding: 12px 20px;
+  background: white;
+  color: #2563eb;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
