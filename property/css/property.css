@@ -20,9 +20,7 @@ body {
 }
 
 @media (max-width: 768px) {
-  .slider {
-    height: 260px;
-  }
+  .slider { height: 260px; }
 }
 
 .slides {
@@ -54,10 +52,6 @@ body {
   border-radius: 50%;
 }
 
-.nav:hover {
-  background: rgba(0,0,0,0.85);
-}
-
 .prev { left: 12px; }
 .next { right: 12px; }
 
@@ -83,14 +77,8 @@ body {
 }
 
 /* DETAILS */
-.details {
-  margin-top: 28px;
-}
-
-.price {
-  color: #16a34a;
-  font-weight: 700;
-}
+.details { margin-top: 28px; }
+.price { color: #16a34a; font-weight: 700; }
 
 /* ACTION BUTTONS */
 .action-buttons {
@@ -115,15 +103,35 @@ body {
 
 /* PROPERTY CARD */
 .property-card {
-  background: #fff;
-  margin-top: 30px;
-  padding: 22px;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  background: #ffffff;
+  margin-top: 32px;
+  padding: 26px 28px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.project-name {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.sub {
+  margin: 6px 0 22px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #64748b;
 }
 
 .specs {
   display: grid;
   grid-template-columns: repeat(2,1fr);
-  gap: 14px;
+  gap: 16px 18px;
+}
+
+.specs div {
+  background: #f3f6f9;
+  padding: 16px 18px;
+  border-radius: 14px;
+  font-weight: 600;
 }

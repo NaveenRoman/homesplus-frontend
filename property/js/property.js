@@ -26,7 +26,7 @@ const dotsContainer = document.querySelector(".dots");
 
 let index = 0;
 
-// create dots
+// dots
 items.forEach((_, i) => {
   const dot = document.createElement("span");
   dot.onclick = () => moveSlide(i);
@@ -39,7 +39,8 @@ dots[0].classList.add("active");
 function moveSlide(i) {
   index = i;
   slides.style.transform = `translateX(-${index * 100}%)`;
-  updateDots();
+  dots.forEach(d => d.classList.remove("active"));
+  dots[index].classList.add("active");
 }
 
 function nextSlide() {
@@ -50,9 +51,4 @@ function nextSlide() {
 function prevSlide() {
   index = (index - 1 + items.length) % items.length;
   moveSlide(index);
-}
-
-function updateDots() {
-  dots.forEach(d => d.classList.remove("active"));
-  dots[index].classList.add("active");
 }
