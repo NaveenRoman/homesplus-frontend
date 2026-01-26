@@ -20,7 +20,6 @@ document.getElementById("mapBtn").href =
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationText)}`;
 
 // SLIDER DOTS
-
 const slides = document.querySelector(".slides");
 const items = document.querySelectorAll(".slides img, .slides video");
 const dotsContainer = document.querySelector(".dots");
@@ -35,12 +34,25 @@ items.forEach((_, i) => {
 });
 
 const dots = document.querySelectorAll(".dots span");
+dots[0].classList.add("active");
 
 function moveSlide(i) {
   index = i;
   slides.style.transform = `translateX(-${index * 100}%)`;
+  updateDots();
+}
+
+function nextSlide() {
+  index = (index + 1) % items.length;
+  moveSlide(index);
+}
+
+function prevSlide() {
+  index = (index - 1 + items.length) % items.length;
+  moveSlide(index);
+}
+
+function updateDots() {
   dots.forEach(d => d.classList.remove("active"));
   dots[index].classList.add("active");
 }
-
-dots[0].classList.add("active");
