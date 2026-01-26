@@ -105,3 +105,59 @@ body {
   border-radius: 10px;
   font-weight: 500;
 }
+
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: #f8fafc;
+  overflow-y: auto;   /* IMPORTANT */
+}
+
+.property-page {
+  max-width: 1100px;
+  margin: auto;
+  padding: 24px 20px 80px; /* bottom padding ensures scroll */
+}
+
+.action-buttons {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 26px;
+}
+
+/* Base button */
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover effect */
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+/* Individual colors */
+.call {
+  background: #2563eb;
+}
+
+.whatsapp {
+  background: #22c55e;
+}
+
+.email {
+  background: #0f172a;
+}
+
+.map {
+  background: #f97316;
+}

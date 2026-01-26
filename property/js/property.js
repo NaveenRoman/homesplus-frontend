@@ -49,3 +49,4 @@ function updateDots() {
 }
 
 updateDots();
+
