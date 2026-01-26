@@ -25,11 +25,8 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
 ================================ */
 async function loadStats() {
   const res = await fetch(`${API_BASE}/stats`, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
+    headers: { Authorization: `Bearer ${token}` }
   });
-
   const data = await res.json();
 
   document.getElementById("totalUsers").textContent = data.totalUsers;
@@ -38,13 +35,11 @@ async function loadStats() {
 }
 
 /* ===============================
-   FETCH USERS
+   FETCH USERS (UPDATED)
 ================================ */
 async function loadUsers() {
   const res = await fetch(`${API_BASE}/users`, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
+    headers: { Authorization: `Bearer ${token}` }
   });
 
   const users = await res.json();
@@ -55,8 +50,11 @@ async function loadUsers() {
     tbody.innerHTML += `
       <tr>
         <td>${u.email}</td>
-        <td>${u.verified ? "✅" : "❌"}</td>
-        <td>${new Date(u.createdAt).toLocaleString()}</td>
+        <td>${u.verified ? "✅ Verified" : "❌ Not Verified"}</td>
+        <td>${u.loginMethod}</td>
+        <td>${u.hasPassword ? "🔐 Set" : "OTP Only"}</td>
+        <td>${u.profileCompleted ? "🟢 Complete" : "⚠ Incomplete"}</td>
+        <td>${new Date(u.createdAt).toLocaleDateString()}</td>
       </tr>
     `;
   });
@@ -67,9 +65,7 @@ async function loadUsers() {
 ================================ */
 async function loadInquiries() {
   const res = await fetch(`${API_BASE}/inquiries`, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
+    headers: { Authorization: `Bearer ${token}` }
   });
 
   const inquiries = await res.json();
@@ -103,5 +99,3 @@ setInterval(() => {
   loadUsers();
   loadInquiries();
 }, 15000);
-
-

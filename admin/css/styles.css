@@ -10,6 +10,7 @@ body {
   color: #0f172a;
 }
 
+/* ================= HEADER ================= */
 .admin-header {
   background: #1e3a8a;
   color: white;
@@ -26,8 +27,10 @@ body {
   padding: 0.5rem 1rem;
   border-radius: 6px;
   cursor: pointer;
+  font-weight: 600;
 }
 
+/* ================= STATS ================= */
 .stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -53,6 +56,7 @@ body {
   color: #1e3a8a;
 }
 
+/* ================= TABLE ================= */
 .table-section {
   padding: 2rem;
 }
@@ -77,4 +81,32 @@ th, td {
 
 th {
   background: #f1f5f9;
+  font-size: 14px;
+  font-weight: 700;
+  color: #334155;
+}
+
+/* ================= ✅ ENHANCEMENT ================= */
+/* Better readability for important columns */
+
+td {
+  font-size: 14px;
+}
+
+/* Verified, Password, Profile columns bold */
+td:nth-child(2),
+td:nth-child(4),
+td:nth-child(5) {
+  font-weight: 600;
+}
+
+/* Zebra rows (optional but professional) */
+tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+/* Hover effect */
+tbody tr:hover {
+  background: #eef2ff;
+  transition: background 0.2s ease;
 }

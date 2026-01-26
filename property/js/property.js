@@ -20,19 +20,33 @@ document.getElementById("mapBtn").href =
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationText)}`;
 
 // SLIDER DOTS
-const slides = document.getElementById("slides");
-const dotsContainer = document.getElementById("dots");
-const images = slides.querySelectorAll("img");
 
+
+
+const slides = document.querySelector(".slides");
+const images = document.querySelectorAll(".slides img");
+const dotsContainer = document.querySelector(".dots");
+
+let index = 0;
+
+// Create dots
 images.forEach((_, i) => {
   const dot = document.createElement("span");
-  if (i === 0) dot.classList.add("active");
+  dot.addEventListener("click", () => moveToSlide(i));
   dotsContainer.appendChild(dot);
 });
 
-slides.addEventListener("scroll", () => {
-  const index = Math.round(slides.scrollLeft / slides.clientWidth);
-  dotsContainer.querySelectorAll("span").forEach((d, i) => {
-    d.classList.toggle("active", i === index);
-  });
-});
+const dots = document.querySelectorAll(".dots span");
+
+function moveToSlide(i) {
+  index = i;
+  slides.style.transform = `translateX(-${index * 100}%)`;
+  updateDots();
+}
+
+function updateDots() {
+  dots.forEach(d => d.classList.remove("active"));
+  dots[index].classList.add("active");
+}
+
+updateDots();
