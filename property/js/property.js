@@ -22,15 +22,14 @@ document.getElementById("mapBtn").href =
 // SLIDER DOTS
 
 
-
 const slides = document.querySelector(".slides");
-const images = document.querySelectorAll(".slides img");
+const slidesItems = document.querySelectorAll(".slides img, .slides video");
 const dotsContainer = document.querySelector(".dots");
 
 let index = 0;
 
 // Create dots
-images.forEach((_, i) => {
+slidesItems.forEach((_, i) => {
   const dot = document.createElement("span");
   dot.addEventListener("click", () => moveToSlide(i));
   dotsContainer.appendChild(dot);
