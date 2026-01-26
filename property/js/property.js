@@ -21,32 +21,26 @@ document.getElementById("mapBtn").href =
 
 // SLIDER DOTS
 
-
 const slides = document.querySelector(".slides");
-const slidesItems = document.querySelectorAll(".slides img, .slides video");
+const items = document.querySelectorAll(".slides img, .slides video");
 const dotsContainer = document.querySelector(".dots");
 
 let index = 0;
 
-// Create dots
-slidesItems.forEach((_, i) => {
+// create dots
+items.forEach((_, i) => {
   const dot = document.createElement("span");
-  dot.addEventListener("click", () => moveToSlide(i));
+  dot.onclick = () => moveSlide(i);
   dotsContainer.appendChild(dot);
 });
 
 const dots = document.querySelectorAll(".dots span");
 
-function moveToSlide(i) {
+function moveSlide(i) {
   index = i;
   slides.style.transform = `translateX(-${index * 100}%)`;
-  updateDots();
-}
-
-function updateDots() {
   dots.forEach(d => d.classList.remove("active"));
   dots[index].classList.add("active");
 }
 
-updateDots();
-
+dots[0].classList.add("active");

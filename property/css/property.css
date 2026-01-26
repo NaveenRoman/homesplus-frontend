@@ -1,31 +1,28 @@
 body {
   margin: 0;
-  font-family: Inter, Arial;
+  font-family: Inter, Arial, sans-serif;
   background: #f8fafc;
 }
 
+/* PAGE */
 .property-page {
   max-width: 1100px;
   margin: auto;
-  padding: 20px;
+  padding: 20px 20px 120px; /* bottom padding forces scroll */
 }
 
 /* SLIDER */
 .slider {
   position: relative;
+  height: 420px;
   overflow: hidden;
   border-radius: 18px;
   background: #000;
 }
 
-/* Fixed professional height */
-.slider {
-  height: 420px;   /* desktop */
-}
-
 @media (max-width: 768px) {
   .slider {
-    height: 260px; /* mobile */
+    height: 260px;
   }
 }
 
@@ -35,18 +32,12 @@ body {
   transition: transform 0.5s ease-in-out;
 }
 
-/* Images + Video SAME SIZE */
 .slides img,
 .slides video {
   width: 100%;
   height: 100%;
-  object-fit: cover;   /* IMPORTANT */
+  object-fit: cover;
   flex-shrink: 0;
-}
-
-/* Video tweaks */
-.slides video {
-  background: black;
 }
 
 /* DOTS */
@@ -71,93 +62,72 @@ body {
   background: #2563eb;
 }
 
-
+/* PROPERTY CARD */
 .property-card {
-  background: #ffffff;
-  margin-top: 25px;
-  padding: 22px;
+  background: #fff;
+  margin-top: 30px;
+  padding: 24px;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
 .project-name {
-  font-size: 26px;
-  font-weight: 800;
+  font-size: 28px;
   margin: 0;
 }
 
 .sub {
   color: #64748b;
-  margin: 4px 0 18px;
   font-weight: 600;
 }
 
-.specs {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-  font-size: 15px;
+.price {
+  color: #16a34a;
+  font-weight: 700;
+  margin: 10px 0;
 }
 
-.specs div {
-  background: #f1f5f9;
-  padding: 12px;
-  border-radius: 10px;
-  font-weight: 500;
+.desc {
+  margin-top: 12px;
+  color: #334155;
 }
 
-body {
-  margin: 0;
-  font-family: Inter, Arial, sans-serif;
-  background: #f8fafc;
-  overflow-y: auto;   /* IMPORTANT */
-}
-
-.property-page {
-  max-width: 1100px;
-  margin: auto;
-  padding: 24px 20px 80px; /* bottom padding ensures scroll */
-}
-
+/* BUTTONS */
 .action-buttons {
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
-  margin-top: 26px;
+  margin-top: 22px;
 }
 
-/* Base button */
 .action-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
   padding: 12px 18px;
   border-radius: 10px;
-  font-weight: 600;
-  text-decoration: none;
   color: #fff;
+  text-decoration: none;
+  font-weight: 600;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Hover effect */
 .action-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 18px rgba(0,0,0,0.15);
 }
 
-/* Individual colors */
-.call {
-  background: #2563eb;
+.call { background: #2563eb; }
+.whatsapp { background: #22c55e; }
+.email { background: #0f172a; }
+.map { background: #f97316; }
+
+/* EXTRA CONTENT */
+.highlights {
+  margin-top: 40px;
+  background: #ffffff;
+  padding: 22px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
-.whatsapp {
-  background: #22c55e;
-}
-
-.email {
-  background: #0f172a;
-}
-
-.map {
-  background: #f97316;
+.highlights ul {
+  line-height: 1.8;
 }
