@@ -78,13 +78,13 @@ modeCards.forEach(card => {
 /* ================================
    FEATURED PROPERTY CLICK
 ================================ */
-
 document.querySelectorAll(".property-card").forEach(card => {
   card.addEventListener("click", function () {
     const propertyId = this.getAttribute("data-id");
-    window.location.href = `property/property.html?id=${propertyId}`;
+    window.location.href = `/property/property.html?id=${propertyId}`;
   });
 });
+
 
 
 /* ================================
