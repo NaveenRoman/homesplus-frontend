@@ -217,27 +217,37 @@ document.getElementById("propertyForm")
 
   const formData = new FormData(this);
 
+  const data = Object.fromEntries(formData.entries());
+
   try {
-    const res = await fetch(`${BACKEND_URL}/api/properties/create`, {
+    const res = await fetch("https://homesplus-backend1-1.onrender.com/api/properties", {
       method: "POST",
-      body: formData
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
     });
 
-    if (!res.ok) throw new Error("Upload failed");
+    const result = await res.json();
 
-    uploadMsg.innerText = "✅ Property Uploaded Successfully!";
-uploadMsg.className = "success";
+    if (!res.ok) throw new Error(result.message);
 
-setTimeout(() => {
-  window.location.href = "/index.html";
-}, 1000);
+    document.getElementById("uploadMsg").innerText = "✅ Property Saved Successfully!";
+    document.getElementById("uploadMsg").style.color = "green";
 
+    this.reset();
+
+    // 🔥 redirect to homepage
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 1200);
 
   } catch (err) {
-    uploadMsg.innerText = "❌ Upload Failed. Check backend.";
-    uploadMsg.className = "error";
+    document.getElementById("uploadMsg").innerText = "❌ Upload failed";
+    document.getElementById("uploadMsg").style.color = "red";
   }
 });
+
 </script>
 
 
