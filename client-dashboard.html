@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Private Client Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body {
+      font-family: Inter;
+      background: #f4f6fb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .access-box {
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      width: 350px;
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .dashboard-content {
+      display: none;
+      padding: 40px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="access-box" id="loginBox">
+  <h2>Client Access</h2>
+
+  <input type="text" id="clientName" placeholder="Enter Name">
+  <input type="email" id="clientEmail" placeholder="Enter Email">
+  <input type="password" id="accessCode" placeholder="Enter Access Code">
+
+  <button onclick="checkAccess()">Access Dashboard</button>
+
+  <p id="msg"></p>
+</div>
+
+<div class="dashboard-content" id="dashboard">
+  <h1>Welcome to Private Dashboard</h1>
+  <p>This is restricted property access content.</p>
+</div>
+
+<script>
+  function checkAccess() {
+    const name = document.getElementById("clientName").value;
+    const email = document.getElementById("clientEmail").value;
+    const code = document.getElementById("accessCode").value;
+    const msg = document.getElementById("msg");
+
+    if (!name || !email || !code) {
+      msg.innerText = "All fields required";
+      msg.style.color = "red";
+      return;
+    }
+
+    // Secret access code
+    if (code === "MGR2026") {
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("dashboard").style.display = "block";
+    } else {
+      msg.innerText = "Invalid Access Code";
+      msg.style.color = "red";
+    }
+  }
+</script>
+
+</body>
+</html>
