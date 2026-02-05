@@ -1,54 +1,46 @@
-const phone = "919949770998";
-const email = "goparajumanasa24@gmail.com";
-const locationText = "Jubilee Hills, Hyderabad";
+document.addEventListener("DOMContentLoaded", function () {
 
-// WHATSAPP
-document.getElementById("waBtn").href =
-  `https://wa.me/${phone}?text=${encodeURIComponent(
-    "Hi, I'm interested in this property. Please share details."
-  )}`;
+  const slides = document.querySelector(".slides");
+  const items = document.querySelectorAll(".slides img, .slides video");
+  const dotsContainer = document.querySelector(".dots");
 
-// CALL
-document.getElementById("callBtn").href = `tel:${phone}`;
+  let index = 0;
 
-// EMAIL
-document.getElementById("mailBtn").href =
-  `mailto:${email}?subject=Property Inquiry&body=I am interested in this property.`;
+  // create dots
+  items.forEach((_, i) => {
+    const dot = document.createElement("span");
+    dot.addEventListener("click", () => moveSlide(i));
+    dotsContainer.appendChild(dot);
+  });
 
-// MAP
-document.getElementById("mapBtn").href =
-  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationText)}`;
+  const dots = document.querySelectorAll(".dots span");
 
-// SLIDER DOTS
-const slides = document.querySelector(".slides");
-const items = document.querySelectorAll(".slides img, .slides video");
-const dotsContainer = document.querySelector(".dots");
+  if (dots.length > 0) {
+    dots[0].classList.add("active");
+  }
 
-let index = 0;
+  function moveSlide(i) {
+    index = i;
+    slides.style.transform = `translateX(-${index * 100}%)`;
+    updateDots();
+  }
 
-// dots
-items.forEach((_, i) => {
-  const dot = document.createElement("span");
-  dot.onclick = () => moveSlide(i);
-  dotsContainer.appendChild(dot);
+  function updateDots() {
+    dots.forEach(d => d.classList.remove("active"));
+    if (dots[index]) {
+      dots[index].classList.add("active");
+    }
+  }
+
+  // Make functions global so buttons can access them
+  window.nextSlide = function () {
+    index = (index + 1) % items.length;
+    moveSlide(index);
+  };
+
+  window.prevSlide = function () {
+    index = (index - 1 + items.length) % items.length;
+    moveSlide(index);
+  };
+
 });
-
-const dots = document.querySelectorAll(".dots span");
-dots[0].classList.add("active");
-
-function moveSlide(i) {
-  index = i;
-  slides.style.transform = `translateX(-${index * 100}%)`;
-  dots.forEach(d => d.classList.remove("active"));
-  dots[index].classList.add("active");
-}
-
-function nextSlide() {
-  index = (index + 1) % items.length;
-  moveSlide(index);
-}
-
-function prevSlide() {
-  index = (index - 1 + items.length) % items.length;
-  moveSlide(index);
-}
