@@ -226,8 +226,12 @@ document.getElementById("propertyForm")
     if (!res.ok) throw new Error("Upload failed");
 
     uploadMsg.innerText = "✅ Property Uploaded Successfully!";
-    uploadMsg.className = "success";
-    this.reset();
+uploadMsg.className = "success";
+
+setTimeout(() => {
+  window.location.href = "/index.html";
+}, 1000);
+
 
   } catch (err) {
     uploadMsg.innerText = "❌ Upload Failed. Check backend.";
