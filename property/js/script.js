@@ -79,14 +79,13 @@ modeCards.forEach(card => {
    FEATURED PROPERTY CLICK
 ================================ */
 
-propertyCards.forEach(card => {
-  card.addEventListener('click', () => {
-    const propertyId = card.dataset.id;
-
-    // Navigate to property detail page
-    window.location.href = `property.html?id=${propertyId}`;
+document.querySelectorAll(".property-card").forEach(card => {
+  card.addEventListener("click", function () {
+    const propertyId = this.getAttribute("data-id");
+    window.location.href = `property/property.html?id=${propertyId}`;
   });
 });
+
 
 /* ================================
    MAP INTERACTION (PRO)
