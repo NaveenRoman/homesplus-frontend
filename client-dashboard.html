@@ -127,26 +127,59 @@ body {
   </div>
 
   <!-- PROPERTY UPLOAD CARD -->
+  <div class="dashboard" id="dashboard">
+
+  <div class="dashboard-header">
+    <h1>Private Client Dashboard</h1>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+
   <div class="card">
-    <h3>Add New Property</h3>
+    <h2>Add New Property</h2>
 
     <form id="propertyForm" enctype="multipart/form-data">
-      <input name="title" placeholder="Title" required>
-      <input name="location" placeholder="Location" required>
-      <input name="price" placeholder="Price" required>
-      <input name="area" placeholder="Area">
-      <input name="facing" placeholder="Facing">
-      <input name="floor" placeholder="Floor">
-      <input name="pricePerSqft" placeholder="Price Per Sqft">
-      <textarea name="description" placeholder="Description"></textarea>
+
+      <!-- BASIC DETAILS -->
+      <input name="title" placeholder="Property Title (ASBL Spire)" required>
+      <input name="location" placeholder="Location (Kokapet, Hyderabad)" required>
       <input name="map" placeholder="Google Map Link">
+
+      <!-- SPECIFICATIONS -->
+      <input name="area" placeholder="Unit Area (2180 Sq ft)">
+      <input name="facing" placeholder="Facing (West)">
+      <input name="floor" placeholder="Floor Level (12th Floor)">
+      <input name="type" placeholder="Property Type (3BHK, 4BHK)">
+      
+      <!-- PRICING -->
+      <input name="pricePerSqft" placeholder="Price per Sqft (₹10,000)">
+      <input name="totalCost" placeholder="Total Cost (₹2.18 Cr)">
+      <select name="availability">
+        <option value="">Availability</option>
+        <option>Available</option>
+        <option>Sold Out</option>
+        <option>Under Construction</option>
+      </select>
+
+      <!-- CONTACT -->
+      <input name="phone" placeholder="Phone Number">
+      <input name="email" placeholder="Agent Email">
+
+      <!-- DESCRIPTION -->
+      <textarea name="description" placeholder="Property Description"></textarea>
+
+      <!-- MEDIA -->
+      <label style="margin-top:10px;">Upload Images / Videos</label>
       <input type="file" name="media" multiple>
 
-      <button type="submit">Upload Property</button>
+      <button type="submit">Save Property</button>
     </form>
 
     <p id="uploadMsg"></p>
+
   </div>
+
+</div>
+
 
 </div>
 
