@@ -1,93 +1,190 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Private Client Dashboard</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <style>
-    body {
-      font-family: Inter;
-      background: #f4f6fb;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+<meta charset="UTF-8">
+<title>Private Client Dashboard</title>
+<link rel="stylesheet" href="css/styles.css">
 
-    .access-box {
-      background: white;
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-      width: 350px;
-      text-align: center;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+}
 
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-    }
+/* LOGIN BOX */
+.access-box {
+  background: white;
+  padding: 40px;
+  border-radius: 18px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+  width: 380px;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
-    button {
-      width: 100%;
-      padding: 12px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+.access-box h2 {
+  margin-bottom: 20px;
+}
 
-    .dashboard-content {
-      display: none;
-      padding: 40px;
-    }
-  </style>
+.access-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.access-box button {
+  width: 100%;
+  padding: 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.access-box button:hover {
+  background: #1e40af;
+}
+
+/* DASHBOARD */
+.dashboard {
+  display: none;
+  padding: 40px;
+  background: #f4f6fb;
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  color: #1e3a8a;
+}
+
+.logout-btn {
+  padding: 8px 14px;
+  background: #ef4444;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+  margin-top: 0;
+  color: #1e3a8a;
+}
+</style>
 </head>
+
 <body>
 
+<!-- LOGIN -->
 <div class="access-box" id="loginBox">
-  <h2>Client Access</h2>
+  <h2>Client Secure Access</h2>
 
-  <input type="text" id="clientName" placeholder="Enter Name">
-  <input type="email" id="clientEmail" placeholder="Enter Email">
-  <input type="password" id="accessCode" placeholder="Enter Access Code">
+  <input type="text" id="clientName" placeholder="Full Name">
+  <input type="email" id="clientEmail" placeholder="Email Address">
+  <input type="password" id="accessCode" placeholder="Access Code">
 
   <button onclick="checkAccess()">Access Dashboard</button>
 
   <p id="msg"></p>
 </div>
 
-<div class="dashboard-content" id="dashboard">
-  <h1>Welcome to Private Dashboard</h1>
-  <p>This is restricted property access content.</p>
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
+
+  <div class="dashboard-header">
+    <h1>Private Client Dashboard</h1>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <div class="card">
+    <h3>Welcome, <span id="clientDisplayName"></span></h3>
+    <p>This is restricted property management area.</p>
+    <p>Here you will upload properties, images and videos.</p>
+  </div>
+
 </div>
 
 <script>
-  function checkAccess() {
-    const name = document.getElementById("clientName").value;
-    const email = document.getElementById("clientEmail").value;
-    const code = document.getElementById("accessCode").value;
-    const msg = document.getElementById("msg");
 
-    if (!name || !email || !code) {
-      msg.innerText = "All fields required";
-      msg.style.color = "red";
-      return;
-    }
+// SECRET CODE (temporary protection)
+const SECRET_CODE = "MGR2026";
 
-    // Secret access code
-    if (code === "MGR2026") {
-      document.getElementById("loginBox").style.display = "none";
-      document.getElementById("dashboard").style.display = "block";
-    } else {
-      msg.innerText = "Invalid Access Code";
-      msg.style.color = "red";
-    }
+/* CHECK ACCESS */
+function checkAccess() {
+  const name = document.getElementById("clientName").value.trim();
+  const email = document.getElementById("clientEmail").value.trim();
+  const code = document.getElementById("accessCode").value.trim();
+  const msg = document.getElementById("msg");
+
+  if (!name || !email || !code) {
+    msg.innerText = "All fields are required";
+    msg.style.color = "red";
+    return;
   }
+
+  if (code !== SECRET_CODE) {
+    msg.innerText = "Invalid Access Code";
+    msg.style.color = "red";
+    return;
+  }
+
+  // Save session
+  localStorage.setItem("clientLoggedIn", "true");
+  localStorage.setItem("clientName", name);
+  localStorage.setItem("clientEmail", email);
+
+  loadDashboard();
+}
+
+/* LOAD DASHBOARD */
+function loadDashboard() {
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
+
+  document.getElementById("clientDisplayName").innerText =
+    localStorage.getItem("clientName");
+}
+
+/* AUTO CHECK ON LOAD */
+window.onload = function () {
+  if (localStorage.getItem("clientLoggedIn") === "true") {
+    loadDashboard();
+  }
+};
+
+/* LOGOUT */
+function logout() {
+  localStorage.removeItem("clientLoggedIn");
+  localStorage.removeItem("clientName");
+  localStorage.removeItem("clientEmail");
+  location.reload();
+}
+
 </script>
 
 </body>
