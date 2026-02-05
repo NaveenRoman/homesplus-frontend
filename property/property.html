@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>ASBL Spire – HomesPlus</title>
+  <title>Property Details – HomesPlus</title>
   <link rel="stylesheet" href="css/property.css">
 </head>
 <body>
@@ -12,30 +12,11 @@
   <!-- SLIDER -->
   <div class="slider">
 
-    <!-- LEFT -->
     <button class="nav prev" onclick="prevSlide()">❮</button>
 
-    <div class="slides">
-      <img src="Assets/ASBL SPIRE/1.jpeg">
-      <img src="Assets/ASBL SPIRE/2.jpeg">
+    <!-- EMPTY – JS WILL FILL -->
+    <div class="slides"></div>
 
-      <video controls muted>
-        <source src="Assets/ASBL SPIRE/3.mp4" type="video/mp4">
-      </video>
-
-      <img src="Assets/ASBL SPIRE/4.jpeg">
-      <img src="Assets/ASBL SPIRE/5.jpeg">
-      <img src="Assets/ASBL SPIRE/6.jpeg">
-      <img src="Assets/ASBL SPIRE/7.jpeg">
-      <img src="Assets/ASBL SPIRE/8.jpeg">
-      <img src="Assets/ASBL SPIRE/9.jpeg">
-      <img src="Assets/ASBL SPIRE/10.jpeg">
-      <img src="Assets/ASBL SPIRE/11.jpeg">
-      <img src="Assets/ASBL SPIRE/12.jpeg">
-      <img src="Assets/ASBL SPIRE/13.jpeg">
-    </div>
-
-    <!-- RIGHT -->
     <button class="nav next" onclick="nextSlide()">❯</button>
 
     <div class="dots"></div>
@@ -43,41 +24,34 @@
 
   <!-- DETAILS -->
   <div class="details">
-    <h1>ASBL Spire</h1>
-    <p class="location">📍 Kokapet, Hyderabad</p>
-    <p class="price">₹ 2.18 Cr </p>
+    <h1></h1>
+    <p class="location"></p>
+    <p class="price"></p>
+    <p class="desc"></p>
 
-    <p class="desc">
-      Premium luxury apartments by ASBL with world-class amenities,
-      excellent connectivity and modern architecture.
-    </p>
-
-    <!-- ACTION BUTTONS -->
     <div class="action-buttons">
       <a href="tel:9704537079" class="action-btn call">📞 Call</a>
       <a href="https://wa.me/919704537079" target="_blank" class="action-btn whatsapp">💬 WhatsApp</a>
       <a href="mailto:mgrproperties2407@gmail.com" class="action-btn email">📧 Email</a>
-      <a href="https://www.google.com/maps/search/ASBL+Spire+Kokapet"
-         target="_blank" class="action-btn map">📍 View Map</a>
+      <a href="#" target="_blank" class="action-btn map">📍 View Map</a>
     </div>
   </div>
 
-  <!-- PROPERTY CARD -->
+  <!-- PROPERTY INFO -->
   <div class="property-card">
-    <h2 class="project-name">ASBL SPIRE</h2>
-    <p class="sub">KOKAPET</p>
+    <h2 class="project-name"></h2>
+    <p class="sub"></p>
 
     <div class="specs">
-      <div><strong>Area:</strong> 2180 Sq.ft</div>
-      <div><strong>Facing:</strong> West (Corner Flat)</div>
-      <div><strong>Floor:</strong> 12th Floor</div>
-      <div><strong>Price:</strong> ₹10,000 / Sq.ft</div>
+      <div><strong>Area:</strong> <span class="area"></span></div>
+      <div><strong>Facing:</strong> <span class="facing"></span></div>
+      <div><strong>Floor:</strong> <span class="floor"></span></div>
+      <div><strong>Price:</strong> <span class="pricePerSqft"></span></div>
     </div>
   </div>
 
 </section>
 
 <script src="js/property.js"></script>
-
 </body>
 </html>
