@@ -220,7 +220,8 @@ document.getElementById("propertyForm")
   const data = Object.fromEntries(formData.entries());
 
   try {
-    const res = await fetch("https://homesplus-backend1-1.onrender.com/api/properties", {
+    const res = await fetch(`${BACKEND_URL}/api/properties`, {
+
       method: "POST",
       headers: {
         "Content-Type": "application/json"
