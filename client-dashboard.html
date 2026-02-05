@@ -114,7 +114,8 @@ body {
   <input type="email" id="clientEmail" placeholder="Email Address">
   <input type="password" id="accessCode" placeholder="Access Code">
 
-  <button onclick="checkAccess()">Access Dashboard</button>
+  <button id="accessBtn">Access Dashboard</button>
+
   <p id="msg"></p>
 </div>
 
@@ -172,11 +173,12 @@ body {
 const SECRET_CODE = "MGR2026";
 const BACKEND_URL = "https://homesplus-backend1-1.onrender.com";
 
-/* LOGIN */
-function checkAccess() {
-  const name = clientName.value.trim();
-  const email = clientEmail.value.trim();
-  const code = accessCode.value.trim();
+/* LOGIN BUTTON LISTENER */
+document.getElementById("accessBtn").addEventListener("click", function() {
+  const name = document.getElementById("clientName").value.trim();
+  const email = document.getElementById("clientEmail").value.trim();
+  const code = document.getElementById("accessCode").value.trim();
+  const msg = document.getElementById("msg");
 
   if (!name || !email || !code) {
     msg.innerText = "All fields required";
@@ -192,11 +194,12 @@ function checkAccess() {
 
   localStorage.setItem("clientLoggedIn", "true");
   loadDashboard();
-}
+});
 
+/* LOAD DASHBOARD */
 function loadDashboard() {
-  loginBox.style.display = "none";
-  dashboard.style.display = "block";
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
 }
 
 window.onload = function() {
@@ -209,6 +212,7 @@ function logout() {
   localStorage.clear();
   location.reload();
 }
+
 
 /* UPLOAD PROPERTY */
 document.getElementById("propertyForm")
