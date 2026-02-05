@@ -26,17 +26,12 @@ body {
   transform: translate(-50%, -50%);
 }
 
-.access-box h2 {
-  margin-bottom: 20px;
-}
-
 .access-box input {
   width: 100%;
   padding: 12px;
   margin: 8px 0;
   border-radius: 8px;
   border: 1px solid #ddd;
-  font-size: 14px;
 }
 
 .access-box button {
@@ -46,13 +41,7 @@ body {
   color: white;
   border: none;
   border-radius: 8px;
-  font-weight: 600;
   cursor: pointer;
-  margin-top: 10px;
-}
-
-.access-box button:hover {
-  background: #1e40af;
 }
 
 /* DASHBOARD */
@@ -70,11 +59,6 @@ body {
   margin-bottom: 30px;
 }
 
-.dashboard-header h1 {
-  margin: 0;
-  color: #1e3a8a;
-}
-
 .logout-btn {
   padding: 8px 14px;
   background: #ef4444;
@@ -89,11 +73,33 @@ body {
   padding: 25px;
   border-radius: 14px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  margin-bottom: 25px;
 }
 
-.card h3 {
-  margin-top: 0;
-  color: #1e3a8a;
+.card input,
+.card textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.card button {
+  background: #16a34a;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.success {
+  color: green;
+}
+.error {
+  color: red;
 }
 </style>
 </head>
@@ -109,7 +115,6 @@ body {
   <input type="password" id="accessCode" placeholder="Access Code">
 
   <button onclick="checkAccess()">Access Dashboard</button>
-
   <p id="msg"></p>
 </div>
 
@@ -117,73 +122,101 @@ body {
 <div class="dashboard" id="dashboard">
 
   <div class="dashboard-header">
-    <h1>Private Client Dashboard</h1>
+    <h1>Property Management</h1>
     <button class="logout-btn" onclick="logout()">Logout</button>
   </div>
 
+  <!-- PROPERTY UPLOAD CARD -->
   <div class="card">
-    <h3>Welcome, <span id="clientDisplayName"></span></h3>
-    <p>This is restricted property management area.</p>
-    <p>Here you will upload properties, images and videos.</p>
+    <h3>Add New Property</h3>
+
+    <form id="propertyForm" enctype="multipart/form-data">
+      <input name="title" placeholder="Title" required>
+      <input name="location" placeholder="Location" required>
+      <input name="price" placeholder="Price" required>
+      <input name="area" placeholder="Area">
+      <input name="facing" placeholder="Facing">
+      <input name="floor" placeholder="Floor">
+      <input name="pricePerSqft" placeholder="Price Per Sqft">
+      <textarea name="description" placeholder="Description"></textarea>
+      <input name="map" placeholder="Google Map Link">
+      <input type="file" name="media" multiple>
+
+      <button type="submit">Upload Property</button>
+    </form>
+
+    <p id="uploadMsg"></p>
   </div>
 
 </div>
 
 <script>
 
-// SECRET CODE (temporary protection)
 const SECRET_CODE = "MGR2026";
 
-/* CHECK ACCESS */
+/* LOGIN */
 function checkAccess() {
-  const name = document.getElementById("clientName").value.trim();
-  const email = document.getElementById("clientEmail").value.trim();
-  const code = document.getElementById("accessCode").value.trim();
-  const msg = document.getElementById("msg");
+  const name = clientName.value.trim();
+  const email = clientEmail.value.trim();
+  const code = accessCode.value.trim();
 
   if (!name || !email || !code) {
-    msg.innerText = "All fields are required";
-    msg.style.color = "red";
+    msg.innerText = "All fields required";
+    msg.className = "error";
     return;
   }
 
   if (code !== SECRET_CODE) {
     msg.innerText = "Invalid Access Code";
-    msg.style.color = "red";
+    msg.className = "error";
     return;
   }
 
-  // Save session
   localStorage.setItem("clientLoggedIn", "true");
   localStorage.setItem("clientName", name);
-  localStorage.setItem("clientEmail", email);
-
   loadDashboard();
 }
 
-/* LOAD DASHBOARD */
 function loadDashboard() {
-  document.getElementById("loginBox").style.display = "none";
-  document.getElementById("dashboard").style.display = "block";
-
-  document.getElementById("clientDisplayName").innerText =
-    localStorage.getItem("clientName");
+  loginBox.style.display = "none";
+  dashboard.style.display = "block";
 }
 
-/* AUTO CHECK ON LOAD */
-window.onload = function () {
+window.onload = function() {
   if (localStorage.getItem("clientLoggedIn") === "true") {
     loadDashboard();
   }
 };
 
-/* LOGOUT */
 function logout() {
-  localStorage.removeItem("clientLoggedIn");
-  localStorage.removeItem("clientName");
-  localStorage.removeItem("clientEmail");
+  localStorage.clear();
   location.reload();
 }
+
+/* UPLOAD PROPERTY */
+document.getElementById("propertyForm")
+  .addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+
+    try {
+      const res = await fetch("https://YOUR-BACKEND-URL/api/properties/create", {
+        method: "POST",
+        body: formData
+      });
+
+      if (!res.ok) throw new Error("Upload failed");
+
+      uploadMsg.innerText = "Property Uploaded Successfully!";
+      uploadMsg.className = "success";
+      this.reset();
+
+    } catch (err) {
+      uploadMsg.innerText = "Upload Failed. Check backend.";
+      uploadMsg.className = "error";
+    }
+});
 
 </script>
 
