@@ -119,15 +119,8 @@ body {
 </div>
 
 <!-- DASHBOARD -->
+<!-- DASHBOARD -->
 <div class="dashboard" id="dashboard">
-
-  <div class="dashboard-header">
-    <h1>Property Management</h1>
-    <button class="logout-btn" onclick="logout()">Logout</button>
-  </div>
-
-  <!-- PROPERTY UPLOAD CARD -->
-  <div class="dashboard" id="dashboard">
 
   <div class="dashboard-header">
     <h1>Private Client Dashboard</h1>
@@ -139,20 +132,18 @@ body {
 
     <form id="propertyForm" enctype="multipart/form-data">
 
-      <!-- BASIC DETAILS -->
       <input name="title" placeholder="Property Title (ASBL Spire)" required>
       <input name="location" placeholder="Location (Kokapet, Hyderabad)" required>
       <input name="map" placeholder="Google Map Link">
 
-      <!-- SPECIFICATIONS -->
       <input name="area" placeholder="Unit Area (2180 Sq ft)">
       <input name="facing" placeholder="Facing (West)">
       <input name="floor" placeholder="Floor Level (12th Floor)">
       <input name="type" placeholder="Property Type (3BHK, 4BHK)">
-      
-      <!-- PRICING -->
+
       <input name="pricePerSqft" placeholder="Price per Sqft (₹10,000)">
       <input name="totalCost" placeholder="Total Cost (₹2.18 Cr)">
+
       <select name="availability">
         <option value="">Availability</option>
         <option>Available</option>
@@ -160,15 +151,12 @@ body {
         <option>Under Construction</option>
       </select>
 
-      <!-- CONTACT -->
       <input name="phone" placeholder="Phone Number">
       <input name="email" placeholder="Agent Email">
 
-      <!-- DESCRIPTION -->
       <textarea name="description" placeholder="Property Description"></textarea>
 
-      <!-- MEDIA -->
-      <label style="margin-top:10px;">Upload Images / Videos</label>
+      <label>Upload Images / Videos</label>
       <input type="file" name="media" multiple>
 
       <button type="submit">Save Property</button>
@@ -180,12 +168,9 @@ body {
 
 </div>
 
-
-</div>
-
 <script>
-
 const SECRET_CODE = "MGR2026";
+const BACKEND_URL = "https://homesplus-backend1-1.onrender.com";
 
 /* LOGIN */
 function checkAccess() {
@@ -206,7 +191,6 @@ function checkAccess() {
   }
 
   localStorage.setItem("clientLoggedIn", "true");
-  localStorage.setItem("clientName", name);
   loadDashboard();
 }
 
@@ -228,30 +212,30 @@ function logout() {
 
 /* UPLOAD PROPERTY */
 document.getElementById("propertyForm")
-  .addEventListener("submit", async function(e) {
-    e.preventDefault();
+.addEventListener("submit", async function(e) {
+  e.preventDefault();
 
-    const formData = new FormData(this);
+  const formData = new FormData(this);
 
-    try {
-      const res = await fetch("https://YOUR-BACKEND-URL/api/properties/create", {
-        method: "POST",
-        body: formData
-      });
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/properties/create`, {
+      method: "POST",
+      body: formData
+    });
 
-      if (!res.ok) throw new Error("Upload failed");
+    if (!res.ok) throw new Error("Upload failed");
 
-      uploadMsg.innerText = "Property Uploaded Successfully!";
-      uploadMsg.className = "success";
-      this.reset();
+    uploadMsg.innerText = "✅ Property Uploaded Successfully!";
+    uploadMsg.className = "success";
+    this.reset();
 
-    } catch (err) {
-      uploadMsg.innerText = "Upload Failed. Check backend.";
-      uploadMsg.className = "error";
-    }
+  } catch (err) {
+    uploadMsg.innerText = "❌ Upload Failed. Check backend.";
+    uploadMsg.className = "error";
+  }
 });
-
 </script>
+
 
 </body>
 </html>
