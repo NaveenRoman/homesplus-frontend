@@ -456,6 +456,38 @@ body {
    SECTION 4 – FEATURED PROPERTIES
 ================================ */
 
+.actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.actions button {
+  padding: 6px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.actions button:nth-child(1) {
+  background: #2563eb;
+  color: white;
+}
+
+.actions button:nth-child(2) {
+  background: #f59e0b;
+  color: white;
+}
+
+.actions button:nth-child(3) {
+  background: #ef4444;
+  color: white;
+}
+
+
+
 .featured-properties {
   padding: 5rem 2rem;
   background: white;

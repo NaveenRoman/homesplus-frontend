@@ -153,10 +153,7 @@ SECTION 3 – PROPERTY DISCOVERY MODES
 SECTION 4 – FEATURED PROPERTIES
 ================================ -->
 <section class="featured-properties" id="featuredProperties">
-<div class="property-scroll" id="propertyContainer">
-</div>
-
-
+  <div class="property-scroll" id="propertyContainer"></div>
 </section>
 
 <script>
@@ -173,26 +170,43 @@ async function loadProperties() {
     properties.forEach(property => {
 
       container.innerHTML += `
-        <article class="property-card"
-          onclick="openProperty('${property._id}')">
+        <article class="property-card">
 
-          <img src="${property.coverImage || 'https://via.placeholder.com/400x300'}"
+          <img src="${property.coverImage || ''}"
                alt="${property.title}">
 
           <div class="property-info">
             <span class="price">
               ₹ ${property.pricePerSqft || ''}
             </span>
+
             <h3>${property.title}</h3>
+
             <h4>
               ${property.area || ''} 
               ${property.facing || ''} 
               ${property.floor || ''}
             </h4>
-            <p class="location">📍 ${property.location || ''}</p>
-            <div class="rating">⭐ 4.5</div>
-          </div>
 
+            <p class="location">
+              📍 ${property.location || ''}
+            </p>
+
+            <div class="actions">
+              <button onclick="openProperty('${property._id}')">
+                View
+              </button>
+
+              <button onclick="editProperty('${property._id}')">
+                Edit
+              </button>
+
+              <button onclick="deleteProperty('${property._id}')">
+                Delete
+              </button>
+            </div>
+
+          </div>
         </article>
       `;
     });
@@ -202,12 +216,40 @@ async function loadProperties() {
   }
 }
 
+/* VIEW */
 function openProperty(id) {
   window.location.href = "/property/property.html?id=" + id;
 }
 
+/* EDIT */
+function editProperty(id) {
+  window.location.href = "/client-dashboard.html?edit=" + id;
+}
+
+/* DELETE */
+async function deleteProperty(id) {
+
+  if (!confirm("Are you sure you want to delete this property?")) return;
+
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/properties/${id}`, {
+      method: "DELETE"
+    });
+
+    if (!res.ok) throw new Error("Delete failed");
+
+    alert("Property deleted successfully");
+
+    loadProperties(); // reload list
+
+  } catch (error) {
+    alert("Delete failed");
+  }
+}
+
 loadProperties();
 </script>
+
 
 
 <section class="cta-hero">
