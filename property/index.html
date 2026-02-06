@@ -172,32 +172,33 @@ async function loadProperties() {
 
     properties.forEach(property => {
 
-      const firstMedia = property.media?.length
-        ? property.media[0].url
-        : "https://via.placeholder.com/400x300";
-
       container.innerHTML += `
-        <article class="property-card" onclick="openProperty('${property._id}')">
-          <img src="${firstMedia}" alt="${property.title}">
+        <article class="property-card"
+          onclick="openProperty('${property._id}')">
+
+          <img src="${property.coverImage || 'https://via.placeholder.com/400x300'}"
+               alt="${property.title}">
+
           <div class="property-info">
             <span class="price">
-              Price: ${property.pricePerSqft || ''}
+              ₹ ${property.pricePerSqft || ''}
             </span>
             <h3>${property.title}</h3>
             <h4>
-              ${property.area || ''}, 
-              ${property.facing || ''}, 
+              ${property.area || ''} 
+              ${property.facing || ''} 
               ${property.floor || ''}
             </h4>
             <p class="location">📍 ${property.location || ''}</p>
             <div class="rating">⭐ 4.5</div>
           </div>
+
         </article>
       `;
     });
 
   } catch (err) {
-    console.error("Failed to load properties");
+    console.error("Failed to load properties", err);
   }
 }
 

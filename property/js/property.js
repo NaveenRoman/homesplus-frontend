@@ -17,7 +17,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.querySelector(".details h1").textContent = property.title;
     document.querySelector(".location").textContent =
       "📍 " + property.location;
-    document.querySelector(".price").textContent = property.price;
+    document.querySelector(".price").textContent =
+    "₹ " + property.pricePerSqft + " / sqft";
+    document.querySelector(".map").href = property.map;
+
     document.querySelector(".desc").textContent = property.description;
 
     document.querySelector(".project-name").textContent =
@@ -31,7 +34,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.querySelector(".pricePerSqft").textContent =
       property.pricePerSqft;
 
-    document.querySelector(".map").href = property.mapLink;
+   
 
     const slides = document.querySelector(".slides");
     slides.innerHTML = "";

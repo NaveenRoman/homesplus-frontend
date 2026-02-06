@@ -157,7 +157,12 @@ body {
 
       <textarea name="description" placeholder="Property Description"></textarea>
 
-      <label>Upload Images / Videos</label>
+      <label>Main Cover Image (Required)</label>
+<input type="file" name="coverImage" accept="image/*" required>
+
+<label>Upload Property Images & Videos</label>
+<input type="file" name="media" multiple accept="image/*,video/*">
+
       
 
       <button type="submit">Save Property</button>
@@ -221,34 +226,29 @@ document.getElementById("propertyForm")
 
   const formData = new FormData(this);
 
-  const data = Object.fromEntries(formData.entries());
-
   try {
     const res = await fetch(`${BACKEND_URL}/api/properties`, {
-
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
+      body: formData
     });
 
     const result = await res.json();
 
     if (!res.ok) throw new Error(result.message);
 
-    document.getElementById("uploadMsg").innerText = "✅ Property Saved Successfully!";
+    document.getElementById("uploadMsg").innerText =
+      "✅ Property Saved Successfully!";
     document.getElementById("uploadMsg").style.color = "green";
 
     this.reset();
 
-    // 🔥 redirect to homepage
     setTimeout(() => {
       window.location.href = "index.html";
     }, 1200);
 
   } catch (err) {
-    document.getElementById("uploadMsg").innerText = "❌ Upload failed";
+    document.getElementById("uploadMsg").innerText =
+      "❌ Upload failed";
     document.getElementById("uploadMsg").style.color = "red";
   }
 });
