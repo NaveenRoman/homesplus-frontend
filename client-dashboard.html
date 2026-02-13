@@ -120,6 +120,9 @@ body {
 </div>
 
 <<!-- DASHBOARD MENU -->
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard" style="display:none;">
+
 <div class="card" id="menuCard">
   <h2>Dashboard Menu</h2>
 
@@ -191,12 +194,7 @@ body {
 </div>
 
 
-<!-- VISITOR SECTION -->
-<div class="card" id="visitorSection" style="display:none;">
-  <h2>Visitor Leads</h2>
 
-  <div id="visitorList">Loading...</div>
-</div>
 
 <script>
 const SECRET_CODE = "MGR2026";
@@ -292,35 +290,7 @@ document.getElementById("propertyForm")
   }
 });
 
-async function loadVisitors() {
-  try {
-    const res = await fetch(`${BACKEND_URL}/api/visitors`);
-    const visitors = await res.json();
 
-    const container = document.getElementById("visitorList");
-    container.innerHTML = "";
-
-    if (visitors.length === 0) {
-      container.innerHTML = "No visitors yet.";
-      return;
-    }
-
-    visitors.forEach(v => {
-      container.innerHTML += `
-        <div style="padding:10px;border-bottom:1px solid #ddd;">
-          <strong>${v.name}</strong><br>
-          📱 ${v.phone}<br>
-          📍 ${v.place}<br>
-          🏠 Property: ${v.propertyId}<br>
-          🕒 ${new Date(v.createdAt).toLocaleString()}
-        </div>
-      `;
-    });
-
-  } catch (err) {
-    document.getElementById("visitorList").innerHTML = "Failed to load visitors.";
-  }
-}
 
 async function loadVisitors() {
   const res = await fetch(`${BACKEND_URL}/api/visitors`);
@@ -379,6 +349,6 @@ function exportToExcel() {
 
 </script>
 
-
+</div>
 </body>
 </html>
