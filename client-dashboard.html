@@ -168,6 +168,29 @@ body {
   <p id="uploadMsg"></p>
 </div>
 
+<div class="card">
+  <h2>Visitor Leads</h2>
+
+  <button onclick="exportToExcel()" style="margin-bottom:15px;background:#2563eb;">
+    Export to Excel
+  </button>
+
+  <table border="1" width="100%" id="visitorTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Place</th>
+        <th>Property</th>
+        <th>Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+
 <!-- VISITOR SECTION -->
 <div class="card" id="visitorSection" style="display:none;">
   <h2>Visitor Leads</h2>
@@ -219,6 +242,8 @@ document.getElementById("accessBtn").addEventListener("click", function() {
 function loadDashboard() {
   document.getElementById("loginBox").style.display = "none";
   document.getElementById("dashboard").style.display = "block";
+  loadVisitors();
+
 }
 
 window.onload = function() {
@@ -296,6 +321,60 @@ async function loadVisitors() {
     document.getElementById("visitorList").innerHTML = "Failed to load visitors.";
   }
 }
+
+async function loadVisitors() {
+  const res = await fetch(`${BACKEND_URL}/api/visitors`);
+  const visitors = await res.json();
+
+  const tbody = document.querySelector("#visitorTable tbody");
+  tbody.innerHTML = "";
+
+  visitors.forEach(v => {
+    const row = `
+      <tr>
+        <td>${v.name}</td>
+        <td>${v.phone}</td>
+        <td>${v.place}</td>
+        <td>${v.propertyId}</td>
+        <td>${new Date(v.createdAt).toLocaleString()}</td>
+        <td>
+          <button onclick="deleteVisitor('${v._id}')"
+                  style="background:#ef4444;color:white;border:none;padding:6px 10px;border-radius:6px;">
+            Delete
+          </button>
+        </td>
+      </tr>
+    `;
+    tbody.innerHTML += row;
+  });
+}
+
+async function deleteVisitor(id) {
+  if (!confirm("Delete this visitor?")) return;
+
+  await fetch(`${BACKEND_URL}/api/visitors/${id}`, {
+    method: "DELETE"
+  });
+
+  loadVisitors();
+}
+
+function exportToExcel() {
+  const table = document.getElementById("visitorTable");
+  const html = table.outerHTML;
+
+  const blob = new Blob([html], {
+    type: "application/vnd.ms-excel"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+
+  a.href = url;
+  a.download = "visitor-leads.xls";
+  a.click();
+}
+
 
 
 </script>
