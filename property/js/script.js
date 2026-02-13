@@ -79,28 +79,37 @@ modeCards.forEach(card => {
    FEATURED PROPERTY CLICK
 ================================ */
 
-
-/* ================================
+/* =================================
 CONFIG
-================================ */
+================================= */
 const BACKEND_URL =
 "https://homesplus-backend1-1.onrender.com";
 
 let selectedPropertyId = null;
 
-function editProperty(id){
 
-  // open dashboard with edit id
+/* =================================
+EDIT PROPERTY
+(Open dashboard with edit id)
+================================= */
+function editProperty(id){
   window.location.href =
   `/client-dashboard.html?edit=${id}`;
 }
 
+
+/* =================================
+AUTO FILL DASHBOARD FORM (EDIT MODE)
+================================= */
 window.addEventListener("DOMContentLoaded", async ()=>{
 
   const params = new URLSearchParams(window.location.search);
   const editId = params.get("edit");
 
   if(!editId) return;
+
+  const form = document.getElementById("propertyForm");
+  if(!form) return; // important (homepage safe)
 
   try{
 
@@ -110,10 +119,6 @@ window.addEventListener("DOMContentLoaded", async ()=>{
 
     const property = await res.json();
 
-    const form =
-      document.getElementById("propertyForm");
-
-    // AUTO FILL FORM
     form.title.value = property.title || "";
     form.location.value = property.location || "";
     form.area.value = property.area || "";
@@ -127,17 +132,18 @@ window.addEventListener("DOMContentLoaded", async ()=>{
     form.description.value =
       property.description || "";
 
-    // store edit id globally
+    // store edit id
     form.dataset.editId = editId;
 
   }catch(err){
     console.error("Edit load failed", err);
   }
-
 });
 
 
-
+/* =================================
+DELETE PROPERTY
+================================= */
 async function deleteProperty(id){
 
   if(!confirm("Delete this property?")) return;
@@ -149,8 +155,7 @@ async function deleteProperty(id){
     });
 
     alert("Property deleted");
-
-    loadProperties(); // reload list
+    loadProperties();
 
   }catch(err){
     console.error(err);
@@ -159,62 +164,62 @@ async function deleteProperty(id){
 }
 
 
-/* ================================
-LOAD PROPERTIES FROM BACKEND
-(ONLY WHAT YOU ADDED IN FORM)
-================================ */
+/* =================================
+LOAD PROPERTIES
+================================= */
 async function loadProperties(){
+
+  const container =
+    document.getElementById("propertyContainer");
+
+  if(!container) return; // dashboard safe
 
   try{
 
     const res = await fetch(`${BACKEND_URL}/api/properties`);
     const properties = await res.json();
 
-    const container =
-      document.getElementById("propertyContainer");
-
     container.innerHTML = "";
 
     properties.forEach(p => {
 
       container.innerHTML += `
-<article class="property-card" data-id="${p._id}">
+      <article class="property-card" data-id="${p._id}">
 
-  <img src="${
-    p.coverImage || "https://via.placeholder.com/400x250"
-  }">
+        <img src="${
+          p.coverImage ||
+          "https://via.placeholder.com/400x250"
+        }">
 
-  <div class="property-info">
+        <div class="property-info">
 
-    <span class="price">
-      ₹ ${p.pricePerSqft || ''}
-    </span>
+          <span class="price">
+            ₹ ${p.pricePerSqft || ""}
+          </span>
 
-    <h3>${p.title || ''}</h3>
+          <h3>${p.title || ""}</h3>
 
-    <h4>${p.area || ''}</h4>
+          <h4>${p.area || ""}</h4>
 
-    <p class="location">
-      📍 ${p.location || ''}
-    </p>
+          <p class="location">
+            📍 ${p.location || ""}
+          </p>
 
-    <!-- ACTION BUTTONS -->
-    <div class="actions">
+          <div class="actions">
 
-      <button onclick="editProperty('${p._id}')">
-        ✏ Edit
-      </button>
+            <button onclick="editProperty('${p._id}')">
+              ✏ Edit
+            </button>
 
-      <button onclick="deleteProperty('${p._id}')">
-        🗑 Delete
-      </button>
+            <button onclick="deleteProperty('${p._id}')">
+              🗑 Delete
+            </button>
 
-    </div>
+          </div>
 
-  </div>
-</article>
-`;
-
+        </div>
+      </article>
+      `;
     });
 
   }catch(err){
@@ -223,34 +228,39 @@ async function loadProperties(){
 }
 
 
-/* ================================
-OPEN POPUP WHEN CARD CLICK
-================================ */
-document.addEventListener("click", (e)=>{
+/* =================================
+OPEN LEAD POPUP (ONLY CARD CLICK)
+================================= */
+document.addEventListener("click",(e)=>{
+
+  // prevent popup when clicking buttons
+  if(e.target.closest(".actions")) return;
 
   const card = e.target.closest(".property-card");
   if(!card) return;
 
   selectedPropertyId = card.dataset.id;
 
-  document.getElementById("leadPopup")
-    .style.display = "flex";
+  const popup = document.getElementById("leadPopup");
+  if(popup){
+    popup.style.display = "flex";
+  }
 });
 
 
-/* ================================
+/* =================================
 SUBMIT LEAD
-================================ */
+================================= */
 async function submitLead(){
 
   const name =
-    document.getElementById("leadName").value.trim();
+    document.getElementById("leadName")?.value.trim();
 
   const phone =
-    document.getElementById("leadPhone").value.trim();
+    document.getElementById("leadPhone")?.value.trim();
 
   const place =
-    document.getElementById("leadPlace").value.trim();
+    document.getElementById("leadPlace")?.value.trim();
 
   if(!name || !phone || !place){
     alert("All fields required");
@@ -280,7 +290,6 @@ async function submitLead(){
     document.getElementById("leadPopup")
       .style.display = "none";
 
-    // reset
     leadName.value = "";
     leadPhone.value = "";
     leadPlace.value = "";
@@ -295,28 +304,25 @@ async function submitLead(){
 }
 
 
-/* CLOSE POPUP */
-document.getElementById("leadPopup")
-.addEventListener("click",(e)=>{
-  if(e.target.id==="leadPopup"){
-    e.target.style.display="none";
-  }
-});
+/* =================================
+CLOSE POPUP
+================================= */
+const popup = document.getElementById("leadPopup");
 
-const editId = this.dataset.editId;
-
-if(editId){
-  xhr.open("PUT",
-    `${BACKEND_URL}/api/properties/${editId}`
-  );
-}else{
-  xhr.open("POST",
-    `${BACKEND_URL}/api/properties`);
+if(popup){
+  popup.addEventListener("click",(e)=>{
+    if(e.target.id==="leadPopup"){
+      popup.style.display="none";
+    }
+  });
 }
 
 
-/* START */
+/* =================================
+LOAD START
+================================= */
 loadProperties();
+
 
 
 /* ================================
