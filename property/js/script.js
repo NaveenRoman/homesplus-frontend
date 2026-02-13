@@ -88,33 +88,6 @@ document.querySelectorAll(".property-card").forEach(card => {
 });
 
 
-async function submitLead() {
-
-  const name = document.getElementById("leadName").value.trim();
-  const phone = document.getElementById("leadPhone").value.trim();
-  const place = document.getElementById("leadPlace").value.trim();
-
-  if(!name || !phone || !place){
-    alert("All fields required");
-    return;
-  }
-
-  await fetch("https://homesplus-backend1-1.onrender.com/api/lead", {
-    method:"POST",
-    headers:{
-      "Content-Type":"application/json"
-    },
-    body: JSON.stringify({
-      name,
-      phone,
-      place,
-      propertyId: selectedPropertyId
-    })
-  });
-
-  // Redirect after sending
-  window.location.href = `/property/property.html?id=${selectedPropertyId}`;
-}
 
 
 
