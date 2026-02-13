@@ -251,6 +251,55 @@ loadProperties();
 </script>
 
 
+<!-- LEAD POPUP -->
+<div id="leadPopup" class="lead-popup">
+  <div class="lead-box">
+    <h3>View Property Details</h3>
+
+    <input type="text" id="leadName" placeholder="Your Name" required>
+    <input type="tel" id="leadPhone" placeholder="WhatsApp Number" required>
+    <input type="text" id="leadPlace" placeholder="Your Location" required>
+
+    <button onclick="submitLead()">Continue</button>
+  </div>
+</div>
+
+<style>
+.lead-popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.lead-box{
+  background:white;
+  padding:30px;
+  border-radius:12px;
+  width:320px;
+  text-align:center;
+}
+
+.lead-box input{
+  width:100%;
+  margin:8px 0;
+  padding:10px;
+}
+
+.lead-box button{
+  width:100%;
+  padding:10px;
+  background:#16a34a;
+  color:white;
+  border:none;
+  cursor:pointer;
+}
+</style>
+
+
 
 <section class="cta-hero">
   <div class="cta-card">
