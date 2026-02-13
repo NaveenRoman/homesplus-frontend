@@ -285,33 +285,50 @@ loadProperties();
   cursor:pointer;
 }
 </style>
-<script>async function submitLead() {
+<script>
+
+async function submitLead() {
 
   const name = document.getElementById("leadName").value.trim();
   const phone = document.getElementById("leadPhone").value.trim();
   const place = document.getElementById("leadPlace").value.trim();
 
-  if(!name || !phone || !place){
+  if (!name || !phone || !place) {
     alert("All fields required");
     return;
   }
 
-  await fetch("https://homesplus-backend1-1.onrender.com/api/lead", {
-    method:"POST",
-    headers:{
-      "Content-Type":"application/json"
-    },
-    body: JSON.stringify({
-      name,
-      phone,
-      place,
-      propertyId: selectedPropertyId
-    })
-  });
+  if (!selectedPropertyId) {
+    alert("Property not selected");
+    return;
+  }
 
-  // Redirect after sending
-  window.location.href = `/property/property.html?id=${selectedPropertyId}`;
+  const message = `
+🏠 *New Property Lead*
+
+👤 Name: ${name}
+📱 WhatsApp: ${phone}
+📍 Location: ${place}
+🔎 Property ID: ${selectedPropertyId}
+
+Please contact this customer immediately.
+`;
+
+  const encodedMessage = encodeURIComponent(message);
+
+  // 🔥 YOUR WHATSAPP NUMBER
+  const adminNumber = "916305747441";
+
+  // Open WhatsApp with message
+  window.open(`https://wa.me/${adminNumber}?text=${encodedMessage}`, "_blank");
+
+  // Then open property page
+  setTimeout(() => {
+    window.location.href = `/property/property.html?id=${selectedPropertyId}`;
+  }, 1000);
 }
+
+
 </script>
 
 <section class="cta-hero">
