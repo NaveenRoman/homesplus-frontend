@@ -132,12 +132,24 @@ body {
 
 <!-- UPLOAD SECTION -->
 <div class="card" id="uploadSection" style="display:none;">
+
+  <button type="button"
+        style="margin-bottom:15px;background:#2563eb;"
+        onclick="goBack()">
+  ← Back to Dashboard
+</button>
+
   <h2>Add New Property</h2>
 
   <form id="propertyForm" enctype="multipart/form-data">
     <input name="title" placeholder="Property Title" required>
     <input name="location" placeholder="Location" required>
-    <input name="map" placeholder="Google Map Link">
+    <select name="verified" required>
+  <option value="">Verification Status</option>
+  <option value="true">✅ Verified</option>
+  <option value="false">❌ Not Verified</option>
+</select>
+
 
     <input name="area" placeholder="Unit Area">
     <input name="facing" placeholder="Facing">
@@ -169,9 +181,26 @@ body {
   </form>
 
   <p id="uploadMsg"></p>
+
+  <div id="progressBox" style="display:none;margin-top:10px;">
+  <strong id="uploadFileName"></strong>
+  <div style="background:#ddd;border-radius:8px;overflow:hidden;margin-top:5px;">
+    <div id="progressBar"
+         style="height:10px;width:0%;background:#16a34a;"></div>
+  </div>
+  <p id="progressText">0%</p>
+</div>
+
 </div>
 
 <div class="card">
+
+  <button type="button"
+        style="margin-bottom:15px;background:#2563eb;"
+        onclick="goBack()">
+  ← Back to Dashboard
+</button>
+
   <h2>Visitor Leads</h2>
 
   <button onclick="exportToExcel()" style="margin-bottom:15px;background:#2563eb;">
@@ -199,6 +228,13 @@ body {
 <script>
 const SECRET_CODE = "MGR2026";
 const BACKEND_URL = "https://homesplus-backend1-1.onrender.com";
+
+function goBack() {
+  document.getElementById("uploadSection").style.display = "none";
+  document.getElementById("visitorSection").style.display = "none";
+  document.getElementById("menuCard").style.display = "block";
+}
+
 
 
 function showUpload() {
@@ -257,38 +293,50 @@ function logout() {
 
 
 /* UPLOAD PROPERTY */
-document.getElementById("propertyForm")
-.addEventListener("submit", async function(e) {
+document.getElementById("propertyForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
   const formData = new FormData(this);
+  const xhr = new XMLHttpRequest();
 
-  try {
-    const res = await fetch(`${BACKEND_URL}/api/properties`, {
-      method: "POST",
-      body: formData
-    });
+  document.getElementById("progressBox").style.display = "block";
 
-    const result = await res.json();
-
-    if (!res.ok) throw new Error(result.message);
-
-    document.getElementById("uploadMsg").innerText =
-      "✅ Property Saved Successfully!";
-    document.getElementById("uploadMsg").style.color = "green";
-
-    this.reset();
-
-    setTimeout(() => {
-      window.location.href = "index.html";
-    }, 1200);
-
-  } catch (err) {
-    document.getElementById("uploadMsg").innerText =
-      "❌ Upload failed";
-    document.getElementById("uploadMsg").style.color = "red";
+  const cover = document.querySelector('input[name="coverImage"]').files[0];
+  if (cover) {
+    document.getElementById("uploadFileName").innerText =
+      "Uploading: " + cover.name;
   }
+
+  xhr.upload.onprogress = function(e) {
+    if (e.lengthComputable) {
+      const percent = Math.round((e.loaded / e.total) * 100);
+      document.getElementById("progressBar").style.width = percent + "%";
+      document.getElementById("progressText").innerText = percent + "%";
+    }
+  };
+
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      document.getElementById("uploadMsg").innerText =
+        "✅ Property Saved Successfully!";
+      document.getElementById("uploadMsg").style.color = "green";
+
+      document.getElementById("progressBar").style.width = "0%";
+      document.getElementById("progressText").innerText = "0%";
+
+      setTimeout(() => {
+        goBack();
+      }, 1200);
+    } else {
+      document.getElementById("uploadMsg").innerText = "❌ Upload failed";
+      document.getElementById("uploadMsg").style.color = "red";
+    }
+  };
+
+  xhr.open("POST", `${BACKEND_URL}/api/properties`);
+  xhr.send(formData);
 });
+
 
 
 
