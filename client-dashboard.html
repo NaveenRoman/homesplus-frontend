@@ -119,64 +119,78 @@ body {
   <p id="msg"></p>
 </div>
 
-<!-- DASHBOARD -->
-<!-- DASHBOARD -->
-<div class="dashboard" id="dashboard">
+<<!-- DASHBOARD MENU -->
+<div class="card" id="menuCard">
+  <h2>Dashboard Menu</h2>
 
-  <div class="dashboard-header">
-    <h1>Private Client Dashboard</h1>
-    <button class="logout-btn" onclick="logout()">Logout</button>
-  </div>
+  <button onclick="showUpload()">📤 Upload Property</button>
+  <button onclick="showVisitors()">👥 Visitor Data</button>
+</div>
 
-  <div class="card">
-    <h2>Add New Property</h2>
+<!-- UPLOAD SECTION -->
+<div class="card" id="uploadSection" style="display:none;">
+  <h2>Add New Property</h2>
 
-    <form id="propertyForm" enctype="multipart/form-data">
+  <form id="propertyForm" enctype="multipart/form-data">
+    <input name="title" placeholder="Property Title" required>
+    <input name="location" placeholder="Location" required>
+    <input name="map" placeholder="Google Map Link">
 
-      <input name="title" placeholder="Property Title (ASBL Spire)" required>
-      <input name="location" placeholder="Location (Kokapet, Hyderabad)" required>
-      <input name="map" placeholder="Google Map Link">
+    <input name="area" placeholder="Unit Area">
+    <input name="facing" placeholder="Facing">
+    <input name="floor" placeholder="Floor Level">
+    <input name="type" placeholder="Property Type">
 
-      <input name="area" placeholder="Unit Area (2180 Sq ft)">
-      <input name="facing" placeholder="Facing (West)">
-      <input name="floor" placeholder="Floor Level (12th Floor)">
-      <input name="type" placeholder="Property Type (3BHK, 4BHK)">
+    <input name="pricePerSqft" placeholder="Price per Sqft">
+    <input name="totalCost" placeholder="Total Cost">
 
-      <input name="pricePerSqft" placeholder="Price per Sqft (₹10,000)">
-      <input name="totalCost" placeholder="Total Cost (₹2.18 Cr)">
+    <select name="availability">
+      <option value="">Availability</option>
+      <option>Available</option>
+      <option>Sold Out</option>
+      <option>Under Construction</option>
+    </select>
 
-      <select name="availability">
-        <option value="">Availability</option>
-        <option>Available</option>
-        <option>Sold Out</option>
-        <option>Under Construction</option>
-      </select>
+    <input name="phone" placeholder="Phone Number">
+    <input name="email" placeholder="Agent Email">
 
-      <input name="phone" placeholder="Phone Number">
-      <input name="email" placeholder="Agent Email">
+    <textarea name="description" placeholder="Property Description"></textarea>
 
-      <textarea name="description" placeholder="Property Description"></textarea>
+    <label>Main Cover Image</label>
+    <input type="file" name="coverImage" required>
 
-      <label>Main Cover Image (Required)</label>
-<input type="file" name="coverImage" accept="image/*" required>
+    <label>Property Images & Videos</label>
+    <input type="file" name="media" multiple>
 
-<label>Upload Property Images & Videos</label>
-<input type="file" name="media" multiple accept="image/*,video/*">
+    <button type="submit">Save Property</button>
+  </form>
 
-      
+  <p id="uploadMsg"></p>
+</div>
 
-      <button type="submit">Save Property</button>
-    </form>
+<!-- VISITOR SECTION -->
+<div class="card" id="visitorSection" style="display:none;">
+  <h2>Visitor Leads</h2>
 
-    <p id="uploadMsg"></p>
-
-  </div>
-
+  <div id="visitorList">Loading...</div>
 </div>
 
 <script>
 const SECRET_CODE = "MGR2026";
 const BACKEND_URL = "https://homesplus-backend1-1.onrender.com";
+
+
+function showUpload() {
+  document.getElementById("menuCard").style.display = "none";
+  document.getElementById("uploadSection").style.display = "block";
+}
+
+function showVisitors() {
+  document.getElementById("menuCard").style.display = "none";
+  document.getElementById("visitorSection").style.display = "block";
+  loadVisitors();
+}
+
 
 /* LOGIN BUTTON LISTENER */
 document.getElementById("accessBtn").addEventListener("click", function() {
@@ -252,6 +266,37 @@ document.getElementById("propertyForm")
     document.getElementById("uploadMsg").style.color = "red";
   }
 });
+
+async function loadVisitors() {
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/visitors`);
+    const visitors = await res.json();
+
+    const container = document.getElementById("visitorList");
+    container.innerHTML = "";
+
+    if (visitors.length === 0) {
+      container.innerHTML = "No visitors yet.";
+      return;
+    }
+
+    visitors.forEach(v => {
+      container.innerHTML += `
+        <div style="padding:10px;border-bottom:1px solid #ddd;">
+          <strong>${v.name}</strong><br>
+          📱 ${v.phone}<br>
+          📍 ${v.place}<br>
+          🏠 Property: ${v.propertyId}<br>
+          🕒 ${new Date(v.createdAt).toLocaleString()}
+        </div>
+      `;
+    });
+
+  } catch (err) {
+    document.getElementById("visitorList").innerHTML = "Failed to load visitors.";
+  }
+}
+
 
 </script>
 
