@@ -384,9 +384,16 @@ Delete
 async function deleteVisitor(id){
 if(!confirm("Delete this visitor?")) return;
 
-await fetch(`${BACKEND_URL}/api/visitors/${id}`,{
+const res = await fetch(
+`${BACKEND_URL}/api/visitors/${id}`,{
 method:"DELETE"
 });
+
+if(!res.ok){
+alert("Visitor not found or already deleted");
+return;
+}
+
 
 loadVisitors();
 }
