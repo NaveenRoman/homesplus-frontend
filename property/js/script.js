@@ -78,28 +78,21 @@ modeCards.forEach(card => {
 /* ================================
    FEATURED PROPERTY CLICK
 ================================ */
+
+
+/* ================================
+CONFIG
+================================ */
+const BACKEND_URL =
+"https://homesplus-backend1-1.onrender.com";
+
 let selectedPropertyId = null;
 
-document.addEventListener("click", function(e){
 
-  const card = e.target.closest(".property-card");
-  if(!card) return;
-
-  selectedPropertyId = card.getAttribute("data-id");
-
-  document.getElementById("leadPopup").style.display = "flex";
-
-});
-
-
-
-const BACKEND_URL = "https://homesplus-backend1-1.onrender.com";
-
-
-
-/* ==========================
-LOAD PROPERTIES
-========================== */
+/* ================================
+LOAD PROPERTIES FROM BACKEND
+(ONLY WHAT YOU ADDED IN FORM)
+================================ */
 async function loadProperties(){
 
   try{
@@ -107,34 +100,33 @@ async function loadProperties(){
     const res = await fetch(`${BACKEND_URL}/api/properties`);
     const properties = await res.json();
 
-    const container = document.getElementById("propertyContainer");
+    const container =
+      document.getElementById("propertyContainer");
+
     container.innerHTML = "";
 
-    properties.forEach(property => {
+    properties.forEach(p => {
 
       container.innerHTML += `
-      <article class="property-card" data-id="${property._id}">
+      <article class="property-card" data-id="${p._id}">
 
-        <img 
-          src="${property.coverImage || 'https://via.placeholder.com/400x250?text=No+Image'}"
-          alt="${property.title || 'Property'}">
+        <img src="${
+          p.coverImage ||
+          'https://via.placeholder.com/400x250'
+        }">
 
         <div class="property-info">
 
           <span class="price">
-            ₹ ${property.pricePerSqft || 'N/A'}
+            ₹ ${p.pricePerSqft || ''}
           </span>
 
-          <h3>${property.title || ''}</h3>
+          <h3>${p.title || ''}</h3>
 
-          <h4>
-            ${property.area || ''}
-            ${property.facing || ''}
-            ${property.floor || ''}
-          </h4>
+          <h4>${p.area || ''}</h4>
 
           <p class="location">
-            📍 ${property.location || ''}
+            📍 ${p.location || ''}
           </p>
 
         </div>
@@ -143,31 +135,39 @@ async function loadProperties(){
     });
 
   }catch(err){
-    console.error("Failed to load properties", err);
+    console.error("Load failed", err);
   }
 }
 
-/* ==========================
-OPEN POPUP WHEN CARD CLICKED
-========================== */
-document.addEventListener("click", function(e){
+
+/* ================================
+OPEN POPUP WHEN CARD CLICK
+================================ */
+document.addEventListener("click", (e)=>{
 
   const card = e.target.closest(".property-card");
   if(!card) return;
 
   selectedPropertyId = card.dataset.id;
 
-  document.getElementById("leadPopup").style.display = "flex";
+  document.getElementById("leadPopup")
+    .style.display = "flex";
 });
 
-/* ==========================
+
+/* ================================
 SUBMIT LEAD
-========================== */
+================================ */
 async function submitLead(){
 
-  const name  = document.getElementById("leadName").value.trim();
-  const phone = document.getElementById("leadPhone").value.trim();
-  const place = document.getElementById("leadPlace").value.trim();
+  const name =
+    document.getElementById("leadName").value.trim();
+
+  const phone =
+    document.getElementById("leadPhone").value.trim();
+
+  const place =
+    document.getElementById("leadPlace").value.trim();
 
   if(!name || !phone || !place){
     alert("All fields required");
@@ -181,7 +181,6 @@ async function submitLead(){
 
   try{
 
-    /* SAVE TO DATABASE */
     await fetch(`${BACKEND_URL}/api/visitors`,{
       method:"POST",
       headers:{
@@ -195,53 +194,35 @@ async function submitLead(){
       })
     });
 
-    /* OPTIONAL WHATSAPP MESSAGE */
-    const message = `
-🏠 New Property Lead
+    document.getElementById("leadPopup")
+      .style.display = "none";
 
-👤 Name: ${name}
-📱 WhatsApp: ${phone}
-📍 Location: ${place}
-🔎 Property ID: ${selectedPropertyId}
-    `;
+    // reset
+    leadName.value = "";
+    leadPhone.value = "";
+    leadPlace.value = "";
 
-    const encoded = encodeURIComponent(message);
-    const adminNumber = "916305747441";
-
-    // Uncomment if you want auto WhatsApp open
-    // window.open(`https://wa.me/${adminNumber}?text=${encoded}`);
-
-    /* CLOSE POPUP */
-    document.getElementById("leadPopup").style.display = "none";
-
-    /* RESET FORM */
-    document.getElementById("leadName").value = "";
-    document.getElementById("leadPhone").value = "";
-    document.getElementById("leadPlace").value = "";
-
-    /* REDIRECT TO PROPERTY PAGE */
-    setTimeout(()=>{
-      window.location.href =
+    window.location.href =
       `/property/property.html?id=${selectedPropertyId}`;
-    },500);
 
-  }catch(error){
-    alert("Something went wrong");
-    console.error(error);
+  }catch(err){
+    console.error(err);
+    alert("Error");
   }
 }
 
-/* CLOSE POPUP OUTSIDE CLICK */
-document.getElementById("leadPopup").addEventListener("click",(e)=>{
+
+/* CLOSE POPUP */
+document.getElementById("leadPopup")
+.addEventListener("click",(e)=>{
   if(e.target.id==="leadPopup"){
-    document.getElementById("leadPopup").style.display="none";
+    e.target.style.display="none";
   }
 });
 
-/* LOAD ON START */
+
+/* START */
 loadProperties();
-
-
 
 
 /* ================================
