@@ -1,99 +1,108 @@
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded", async () => {
 
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
+const BACKEND_URL =
+"https://homesplus-backend1-1.onrender.com";
 
-  if (!id) return;
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
 
-  try {
-    const res = await fetch(
-      `https://homesplus-backend1-1.onrender.com/api/properties/${id}`
-    );
+if(!id) return;
 
-    const property = await res.json();
-    if (!property) return;
+try{
 
-    /* ===============================
-       TEXT DATA
-    ================================ */
+  const res = await fetch(
+    `${BACKEND_URL}/api/properties/${id}`
+  );
 
-    document.querySelector(".details h1").textContent = property.title || "";
-    document.querySelector(".location").textContent =
-      "📍 " + (property.location || "");
+  const property = await res.json();
+  if(!property) return;
 
-    document.querySelector(".price").textContent =
-      property.pricePerSqft || "";
+  /* ===========================
+     TEXT DATA (ONLY FORM FIELDS)
+  ============================ */
 
-    document.querySelector(".map").href = property.map || "#";
-    document.querySelector(".desc").textContent = property.description || "";
+  document.querySelector(".title").textContent =
+    property.title || "";
 
-    document.querySelector(".project-name").textContent =
-      (property.title || "").toUpperCase();
+  document.querySelector(".location").textContent =
+    "📍 " + (property.location || "");
 
-    document.querySelector(".sub").textContent =
-      (property.location || "").toUpperCase();
+  document.querySelector(".price").textContent =
+    "₹ " + (property.pricePerSqft || "");
 
-    document.querySelector(".area").textContent = property.area || "";
-    document.querySelector(".facing").textContent = property.facing || "";
-    document.querySelector(".floor").textContent = property.floor || "";
-    document.querySelector(".pricePerSqft").textContent =
-      property.pricePerSqft || "";
+  document.querySelector(".desc").textContent =
+    property.description || "";
 
-    /* ===============================
-       SLIDER SECTION
-    ================================ */
+  document.querySelector(".project-name").textContent =
+    property.title || "";
 
-    const slides = document.querySelector(".slides");
-    slides.innerHTML = "";
+  document.querySelector(".area").textContent =
+    property.area || "";
 
-    /* 1️⃣ Add Cover Image First */
-    if (property.coverImage) {
-      const coverImg = document.createElement("img");
-      coverImg.src = property.coverImage;
-      slides.appendChild(coverImg);
-    }
+  document.querySelector(".facing").textContent =
+    property.facing || "";
 
-    /* 2️⃣ Add Other Media */
-    if (property.media && property.media.length > 0) {
-      property.media.forEach(item => {
-        if (item.type === "img") {
-          const img = document.createElement("img");
-          img.src = item.url;
-          slides.appendChild(img);
-        } else {
-          const video = document.createElement("video");
-          video.controls = true;
-          video.muted = true;
-          video.src = item.url;
-          slides.appendChild(video);
-        }
-      });
-    }
+  document.querySelector(".floor").textContent =
+    property.floor || "";
 
-    /* ===============================
-       SIMPLE SLIDER LOGIC
-    ================================ */
+  document.querySelector(".pricePerSqft").textContent =
+    property.pricePerSqft || "";
 
-    let currentIndex = 0;
-    const allSlides = slides.querySelectorAll("img, video");
 
-    function showSlide(index) {
-      if (!allSlides.length) return;
+  /* ===========================
+     SLIDER
+  ============================ */
 
-      currentIndex = (index + allSlides.length) % allSlides.length;
-      slides.style.transform = `translateX(-${currentIndex * 100}%)`;
-    }
+  const slides = document.querySelector(".slides");
+  slides.innerHTML = "";
 
-    /* Make global for buttons */
-    window.nextSlide = function () {
-      showSlide(currentIndex + 1);
-    };
-
-    window.prevSlide = function () {
-      showSlide(currentIndex - 1);
-    };
-
-  } catch (error) {
-    console.error("Error loading property:", error);
+  // COVER IMAGE
+  if(property.coverImage){
+    const img = document.createElement("img");
+    img.src = property.coverImage;
+    slides.appendChild(img);
   }
+
+  // MEDIA
+  if(property.media && property.media.length){
+
+    property.media.forEach(m => {
+
+      if(m.type === "img"){
+        const img = document.createElement("img");
+        img.src = m.url;
+        slides.appendChild(img);
+      }else{
+        const video = document.createElement("video");
+        video.src = m.url;
+        video.controls = true;
+        video.muted = true;
+        slides.appendChild(video);
+      }
+
+    });
+  }
+
+  /* ===========================
+     SIMPLE SLIDER LOGIC
+  ============================ */
+
+  let current = 0;
+  const items = slides.querySelectorAll("img,video");
+
+  function showSlide(index){
+    if(!items.length) return;
+
+    current = (index + items.length) % items.length;
+    slides.style.transform =
+      `translateX(-${current * 100}%)`;
+  }
+
+  window.nextSlide = () => showSlide(current + 1);
+  window.prevSlide = () => showSlide(current - 1);
+
+}catch(err){
+  console.error("Property load error", err);
+}
+
 });

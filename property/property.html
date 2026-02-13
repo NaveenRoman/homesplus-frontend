@@ -1,46 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Property Details – HomesPlus</title>
-  <link rel="stylesheet" href="css/property.css">
+<meta charset="UTF-8">
+<title>Property Details – HomesPlus</title>
+<link rel="stylesheet" href="css/property.css">
 </head>
+
 <body>
 
 <section class="property-page">
 
-  <!-- SLIDER -->
+  <!-- IMAGE / VIDEO SLIDER -->
   <div class="slider">
 
     <button class="nav prev" onclick="prevSlide()">❮</button>
 
-    <!-- EMPTY – JS WILL FILL -->
     <div class="slides"></div>
 
     <button class="nav next" onclick="nextSlide()">❯</button>
 
-    <div class="dots"></div>
   </div>
 
-  <!-- DETAILS -->
+
+  <!-- BASIC DETAILS -->
   <div class="details">
-    <h1></h1>
+    <h1 class="title"></h1>
     <p class="location"></p>
     <p class="price"></p>
     <p class="desc"></p>
 
     <div class="action-buttons">
       <a href="tel:9704537079" class="action-btn call">📞 Call</a>
-      <a href="https://wa.me/919704537079" target="_blank" class="action-btn whatsapp">💬 WhatsApp</a>
-      <a href="mailto:mgrproperties2407@gmail.com" class="action-btn email">📧 Email</a>
-      <a href="#" target="_blank" class="action-btn map">📍 View Map</a>
+      <a href="https://wa.me/919704537079"
+         target="_blank"
+         class="action-btn whatsapp">💬 WhatsApp</a>
+      <a href="mailto:mgrproperties2407@gmail.com"
+         class="action-btn email">📧 Email</a>
     </div>
   </div>
 
+
   <!-- PROPERTY INFO -->
   <div class="property-card">
+
     <h2 class="project-name"></h2>
-    <p class="sub"></p>
 
     <div class="specs">
       <div><strong>Area:</strong> <span class="area"></span></div>
@@ -48,10 +51,12 @@
       <div><strong>Floor:</strong> <span class="floor"></span></div>
       <div><strong>Price:</strong> <span class="pricePerSqft"></span></div>
     </div>
+
   </div>
 
 </section>
 
 <script src="js/property.js"></script>
+
 </body>
 </html>
