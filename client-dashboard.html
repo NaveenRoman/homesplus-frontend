@@ -432,51 +432,46 @@ a.download="visitor-leads.xls";
 a.click();
 }
 
-function showFavorites(){
-hideAll();
-document.getElementById("favoriteSection")
-.style.display="block";
-loadFavorites();
+function showFavorites() {
+  document.getElementById("menuCard").style.display = "none";
+  document.getElementById("uploadSection").style.display = "none";
+  document.getElementById("visitorSection").style.display = "none";
+  document.getElementById("favoriteSection").style.display = "block";
+  loadFavorites();
 }
 
-async function loadFavorites(){
+async function loadFavorites() {
 
-const res = await fetch(
-`${BACKEND_URL}/api/favorites`
-);
+  const res = await fetch(`${BACKEND_URL}/api/favorites`);
+  const favorites = await res.json();
 
-const favorites = await res.json();
+  const tbody = document.querySelector("#favoriteTable tbody");
+  tbody.innerHTML = "";
 
-const tbody =
-document.querySelector("#favoriteTable tbody");
-
-tbody.innerHTML="";
-
-favorites.forEach(f=>{
-
-tbody.innerHTML += `
-<tr>
-<td>${f.propertyName}</td>
-<td>${new Date(f.createdAt).toLocaleString()}</td>
-<td>
-<button onclick="deleteFavorite('${f._id}')"
-style="background:#ef4444;color:white;">
-Delete
-</button>
-</td>
-</tr>
-`;
-
-});
+  favorites.forEach(f => {
+    const row = `
+      <tr>
+        <td>${f.propertyName}</td>
+        <td>${new Date(f.createdAt).toLocaleString()}</td>
+        <td>
+          <button onclick="deleteFavorite('${f._id}')"
+                  style="background:#ef4444;color:white;border:none;padding:6px 10px;border-radius:6px;">
+            Delete
+          </button>
+        </td>
+      </tr>
+    `;
+    tbody.innerHTML += row;
+  });
 }
 
-async function deleteFavorite(id){
+async function deleteFavorite(id) {
 
-await fetch(`${BACKEND_URL}/api/favorites/${id}`,{
-method:"DELETE"
-});
+  await fetch(`${BACKEND_URL}/api/favorites/${id}`, {
+    method: "DELETE"
+  });
 
-loadFavorites();
+  loadFavorites();
 }
 
 </script>

@@ -108,30 +108,41 @@ try{
 });
 
 
-async function addFavorite(){
+async function addFavorite() {
 
   const params = new URLSearchParams(window.location.search);
   const propertyId = params.get("id");
 
-  if(!propertyId) return;
+  if (!propertyId) return;
 
-  try{
+  try {
 
-    await fetch(
+    const res = await fetch(
       "https://homesplus-backend1-1.onrender.com/api/favorites",
       {
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json"
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
         },
-        body:JSON.stringify({ propertyId })
+        body: JSON.stringify({ propertyId })
       }
     );
 
-    alert("Added to favorites ❤️");
+    const data = await res.json();
 
-  }catch(err){
-    console.error(err);
+    const btn = document.querySelector(".fav");
+
+    if (data.message === "Already added") {
+      btn.innerText = "❤️ Already Added";
+      btn.disabled = true;
+      return;
+    }
+
+    btn.innerText = "❤️ Added";
+    btn.disabled = true;
+
+  } catch (err) {
     alert("Failed to add favorite");
   }
 }
+
