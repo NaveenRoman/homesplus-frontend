@@ -170,45 +170,34 @@ async function loadProperties() {
     properties.forEach(property => {
 
       container.innerHTML += `
-        <article class="property-card">
+  <article class="property-card"
+           data-id="${property._id}">
 
-          <img src="${property.coverImage || ''}"
-               alt="${property.title}">
+    <img src="${property.coverImage || ''}"
+         alt="${property.title}">
 
-          <div class="property-info">
-            <span class="price">
-              ₹ ${property.pricePerSqft || ''}
-            </span>
+    <div class="property-info">
 
-            <h3>${property.title}</h3>
+      <span class="price">
+        ₹ ${property.pricePerSqft || ''}
+      </span>
 
-            <h4>
-              ${property.area || ''} 
-              ${property.facing || ''} 
-              ${property.floor || ''}
-            </h4>
+      <h3>${property.title}</h3>
 
-            <p class="location">
-              📍 ${property.location || ''}
-            </p>
+      <h4>
+        ${property.area || ''} 
+        ${property.facing || ''} 
+        ${property.floor || ''}
+      </h4>
 
-            <div class="actions">
-              <button onclick="openProperty('${property._id}')">
-                View
-              </button>
+      <p class="location">
+        📍 ${property.location || ''}
+      </p>
 
-              <button onclick="editProperty('${property._id}')">
-                Edit
-              </button>
+    </div>
+  </article>
+`;
 
-              <button onclick="deleteProperty('${property._id}')">
-                Delete
-              </button>
-            </div>
-
-          </div>
-        </article>
-      `;
     });
 
   } catch (err) {
@@ -217,9 +206,7 @@ async function loadProperties() {
 }
 
 /* VIEW */
-function openProperty(id) {
-  window.location.href = "/property/property.html?id=" + id;
-}
+
 
 /* EDIT */
 function editProperty(id) {

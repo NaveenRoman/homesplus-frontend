@@ -80,12 +80,17 @@ modeCards.forEach(card => {
 ================================ */
 let selectedPropertyId = null;
 
-document.querySelectorAll(".property-card").forEach(card => {
-  card.addEventListener("click", function () {
-    selectedPropertyId = this.getAttribute("data-id");
-    document.getElementById("leadPopup").style.display = "flex";
-  });
+document.addEventListener("click", function(e){
+
+  const card = e.target.closest(".property-card");
+  if(!card) return;
+
+  selectedPropertyId = card.getAttribute("data-id");
+
+  document.getElementById("leadPopup").style.display = "flex";
+
 });
+
 
 
 
