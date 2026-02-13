@@ -88,6 +88,76 @@ const BACKEND_URL =
 
 let selectedPropertyId = null;
 
+function editProperty(id){
+
+  // open dashboard with edit id
+  window.location.href =
+  `/client-dashboard.html?edit=${id}`;
+}
+
+window.addEventListener("DOMContentLoaded", async ()=>{
+
+  const params = new URLSearchParams(window.location.search);
+  const editId = params.get("edit");
+
+  if(!editId) return;
+
+  try{
+
+    const res = await fetch(
+      `${BACKEND_URL}/api/properties/${editId}`
+    );
+
+    const property = await res.json();
+
+    const form =
+      document.getElementById("propertyForm");
+
+    // AUTO FILL FORM
+    form.title.value = property.title || "";
+    form.location.value = property.location || "";
+    form.area.value = property.area || "";
+    form.facing.value = property.facing || "";
+    form.floor.value = property.floor || "";
+    form.type.value = property.type || "";
+    form.pricePerSqft.value =
+      property.pricePerSqft || "";
+    form.totalCost.value =
+      property.totalCost || "";
+    form.description.value =
+      property.description || "";
+
+    // store edit id globally
+    form.dataset.editId = editId;
+
+  }catch(err){
+    console.error("Edit load failed", err);
+  }
+
+});
+
+
+
+async function deleteProperty(id){
+
+  if(!confirm("Delete this property?")) return;
+
+  try{
+
+    await fetch(`${BACKEND_URL}/api/properties/${id}`,{
+      method:"DELETE"
+    });
+
+    alert("Property deleted");
+
+    loadProperties(); // reload list
+
+  }catch(err){
+    console.error(err);
+    alert("Delete failed");
+  }
+}
+
 
 /* ================================
 LOAD PROPERTIES FROM BACKEND
@@ -108,30 +178,43 @@ async function loadProperties(){
     properties.forEach(p => {
 
       container.innerHTML += `
-      <article class="property-card" data-id="${p._id}">
+<article class="property-card" data-id="${p._id}">
 
-        <img src="${
-          p.coverImage ||
-          'https://via.placeholder.com/400x250'
-        }">
+  <img src="${
+    p.coverImage || "https://via.placeholder.com/400x250"
+  }">
 
-        <div class="property-info">
+  <div class="property-info">
 
-          <span class="price">
-            ₹ ${p.pricePerSqft || ''}
-          </span>
+    <span class="price">
+      ₹ ${p.pricePerSqft || ''}
+    </span>
 
-          <h3>${p.title || ''}</h3>
+    <h3>${p.title || ''}</h3>
 
-          <h4>${p.area || ''}</h4>
+    <h4>${p.area || ''}</h4>
 
-          <p class="location">
-            📍 ${p.location || ''}
-          </p>
+    <p class="location">
+      📍 ${p.location || ''}
+    </p>
 
-        </div>
-      </article>
-      `;
+    <!-- ACTION BUTTONS -->
+    <div class="actions">
+
+      <button onclick="editProperty('${p._id}')">
+        ✏ Edit
+      </button>
+
+      <button onclick="deleteProperty('${p._id}')">
+        🗑 Delete
+      </button>
+
+    </div>
+
+  </div>
+</article>
+`;
+
     });
 
   }catch(err){
@@ -219,6 +302,17 @@ document.getElementById("leadPopup")
     e.target.style.display="none";
   }
 });
+
+const editId = this.dataset.editId;
+
+if(editId){
+  xhr.open("PUT",
+    `${BACKEND_URL}/api/properties/${editId}`
+  );
+}else{
+  xhr.open("POST",
+    `${BACKEND_URL}/api/properties`);
+}
 
 
 /* START */
